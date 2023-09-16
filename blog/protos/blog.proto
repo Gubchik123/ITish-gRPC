@@ -1,0 +1,181 @@
+// Proto file for blog service
+
+syntax = "proto3";
+
+package blog;
+
+
+service Blog {
+    // Post -------------------------------------------------------------------------------
+    rpc GetPosts(GetPostsRequest) returns (GetPostsResponse) {};
+    rpc GetPostBySlug(GetPostBySlugRequest) returns (GetPostBySlugResponse) {};
+    rpc CreatePost(CreatePostRequest) returns (CreatePostResponse) {};
+    rpc UpdatePostBySlug(UpdatePostBySlugRequest) returns (UpdatePostBySlugResponse) {};
+    rpc DeletePostBySlug(DeletePostBySlugRequest) returns (DeletePostBySlugResponse) {};
+    // Tag --------------------------------------------------------------------------------
+    rpc GetTags(GetTagsRequest) returns (GetTagsResponse) {};
+    rpc GetTagBySlug(GetTagBySlugRequest) returns (GetTagBySlugResponse) {};
+    // Comment ----------------------------------------------------------------------------
+    rpc GetPostComments(GetPostCommentsRequest) returns (GetPostCommentsResponse) {};
+    rpc CreatePostComment(CreatePostCommentRequest) returns (CreatePostCommentResponse) {};
+    rpc UpdatePostComment(UpdatePostCommentRequest) returns (UpdatePostCommentResponse) {};
+    rpc DeletePostComment(DeletePostCommentRequest) returns (DeletePostCommentResponse) {};
+    // Like -------------------------------------------------------------------------------
+    rpc GetPostLikes(GetPostLikesRequest) returns (GetPostLikesResponse) {};
+    rpc CreatePostLike(CreatePostLikeRequest) returns (CreatePostLikeResponse) {};
+    rpc DeletePostLike(DeletePostLikeRequest) returns (DeletePostLikeResponse) {};
+}
+
+// Structures -----------------------------------------------------------------------------
+
+// Post structures --------------------------------------------------------------
+
+message PostSchema {
+    string title = 1;
+    string body = 2;
+    string tags = 3;
+    int64 user_id = 4;
+}
+
+message PostUpdateSchema {
+    string title = 1;
+    string body = 2;
+    string tags = 3;
+}
+
+// Tag structures ---------------------------------------------------------------
+
+message TagSchema {
+    string name = 1;
+    string slug = 2;
+}
+
+// Comment structures -----------------------------------------------------------
+
+message CommentSchema {
+    string body = 1;
+    int64 post_id = 2;
+    optional int64 user_id = 3;
+}
+
+message CommentUpdateSchema {
+    int64 id = 1;
+    string body = 2;
+}
+
+// Like structures --------------------------------------------------------------
+
+message LikeSchema {
+    int64 post_id = 1;
+    optional int64 user_id = 2;
+}
+
+// Post requests - responses --------------------------------------------------------------
+
+message GetPostsRequest {
+    int64 limit = 1;
+    int64 offset = 2;
+}
+message GetPostsResponse {
+    repeated PostSchema posts = 1;
+}
+
+message GetPostBySlugRequest {
+    string slug = 1;
+}
+message GetPostBySlugResponse {
+    PostSchema post = 1;
+}
+
+message CreatePostRequest {
+    PostSchema post = 1;
+}
+message CreatePostResponse {
+    PostSchema post = 1;
+}
+
+message UpdatePostBySlugRequest {
+    PostUpdateSchema post = 1;
+    int64 post_slug = 2;
+}
+message UpdatePostBySlugResponse {
+    PostSchema post = 1;
+}
+
+message DeletePostBySlugRequest {
+    string slug = 1;
+}
+message DeletePostBySlugResponse {
+    string slug = 1;
+}
+
+// Tag requests - responses ---------------------------------------------------------------
+
+message GetTagsRequest {
+    int64 limit = 1;
+    int64 offset = 2;
+}
+message GetTagsResponse {
+    repeated TagSchema tags = 1;
+}
+
+message GetTagBySlugRequest {
+    string slug = 1;
+}
+message GetTagBySlugResponse {
+    TagSchema tag = 1;
+    repeated PostSchema posts = 2;
+}
+
+// Comment requests - responses -----------------------------------------------------------
+
+message GetPostCommentsRequest {
+    string post_slug = 1;
+}
+message GetPostCommentsResponse {
+    repeated CommentSchema comments = 1;
+}
+
+message CreatePostCommentRequest {
+    CommentSchema comment = 1;
+}
+message CreatePostCommentResponse {
+    CommentSchema comment = 1;
+}
+
+message UpdatePostCommentRequest {
+    CommentUpdateSchema comment = 1;
+}
+message UpdatePostCommentResponse {
+    CommentSchema comment = 1;
+}
+
+message DeletePostCommentRequest {
+    int64 comment_id = 1;
+}
+message DeletePostCommentResponse {
+    string status = 1;
+}
+
+// Like requests - responses --------------------------------------------------------------
+
+message GetPostLikesRequest {
+    string post_slug = 1;
+}
+message GetPostLikesResponse {
+    repeated LikeSchema likes = 1;
+}
+
+message CreatePostLikeRequest {
+    LikeSchema like = 1;
+}
+message CreatePostLikeResponse {
+    LikeSchema like = 1;
+}
+
+message DeletePostLikeRequest {
+    int64 like_id = 1;
+}
+message DeletePostLikeResponse {
+    string status = 1;
+}
