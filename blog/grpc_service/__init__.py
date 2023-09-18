@@ -30,6 +30,7 @@ class BlogServicer(
 
 
 async def start(address: str):
+    """Starts Blog gRPC server."""
     server = grpc.aio.server(futures.ThreadPoolExecutor(max_workers=3))
     health_servicer = health.HealthServicer(
         experimental_non_blocking=True,
