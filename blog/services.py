@@ -26,14 +26,13 @@ def _get_tag_titles_from_(tags: str, db: Session):
     return tag_titles
 
 
-def get_all_tags_for_post_from_(post_tags: str):
+def get_all_tags_for_post_from_(post_tags: str, db: Session):
     """Returns all tags for post from given post tags."""
-    with SessionLocal() as db:
-        return (
-            [
-                db.query(Tag).filter(Tag.title == tag_title).first()
-                for tag_title in _get_tag_titles_from_(post_tags, db)
-            ]
-            if post_tags
-            else []
-        )
+    return (
+        [
+            db.query(Tag).filter(Tag.title == tag_title).first()
+            for tag_title in _get_tag_titles_from_(post_tags, db)
+        ]
+        if post_tags
+        else []
+    )

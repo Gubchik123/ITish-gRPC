@@ -1,5 +1,7 @@
+import logging
 from typing import Optional, NoReturn
 
+from sqlalchemy import update
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm import Session, joinedload
 
@@ -9,10 +11,13 @@ from blog.protos import blog_pb2 as schemas
 from db import SessionLocal, commit_and_refresh, add_commit_and_refresh
 
 
+logger = logging.getLogger(__name__)
+
+
 # * C - create ----------------------------------------------------------------
 
 
-def create_post(post_schema: schemas.PostSchema):
+def create_post(post_schema: schemas.PostCreateSchema):
     """Creates post in database and returns it."""
     with SessionLocal() as db:
         post = models.Post(
@@ -47,35 +52,29 @@ def create_like(like_schema: schemas.LikeSchema):
 # * R - read ------------------------------------------------------------------
 
 
-def _get_all_posts_by_query(db: Session, query: str):
-    """Returns all posts from database by query."""
-    return (
-        db.query(models.Post)
-        .filter(models.Post.title.ilike(f"%{query}%"))
-        .order_by(models.Post.id.desc())
-        .all()
-    )
-
-
-def get_all_posts(query: str):
+def get_all_posts(limit: int, offset: int):
     """Returns all posts from database."""
     with SessionLocal() as db:
         return (
-            db.query(models.Post).order_by(models.Post.id.desc()).all()
-            if not query
-            else _get_all_posts_by_query(db, query)
+            db.query(models.Post)
+            .order_by(models.Post.id.desc())
+            .options(joinedload(models.Post.tags))
+            .limit(limit)
+            .offset(offset)
+            .all()
         )
 
 
-def get_all_tags():
+def get_all_tags(limit: int, offset: int):
     """Returns all tags from database."""
     with SessionLocal() as db:
-        return db.query(models.Tag).all()
+        return db.query(models.Tag).limit(limit).offset(offset).all()
 
 
 def get_post_by_slug(slug: str, db: Optional[Session] = None):
     """Returns post from database by slug."""
     if db is None:
+        logger.debug("DB session is None in get_post_by_slug")
         db = SessionLocal()
     post = (
         db.query(models.Post)
@@ -92,10 +91,35 @@ def get_post_by_slug(slug: str, db: Optional[Session] = None):
 def get_tag_by_slug(slug: str):
     """Returns tag from database by slug."""
     with SessionLocal() as db:
-        tag = db.query(models.Tag).filter(models.Tag.slug == slug).first()
+        tag = (
+            db.query(models.Tag)
+            .filter(models.Tag.slug == slug)
+            .options(joinedload(models.Tag.posts))
+            .first()
+        )
         if tag is None:
             raise NoResultFound
         return tag
+
+
+def get_post_comments_by_slug(slug: str):
+    """Returns post comments from database by slug."""
+    with SessionLocal() as db:
+        post = get_post_by_slug(slug, db)
+        return (
+            db.query(models.Comment)
+            .filter(models.Comment.post_id == post.id)
+            .all()
+        )
+
+
+def get_post_likes_by_slug(slug: str):
+    """Returns post likes from database by slug."""
+    with SessionLocal() as db:
+        post = get_post_by_slug(slug, db)
+        return (
+            db.query(models.Like).filter(models.Like.post_id == post.id).all()
+        )
 
 
 def _get_comment_by_id(db: Session, comment_id: int):
@@ -123,32 +147,39 @@ def check_if_current_user_if_owner(
 
 def update_post(
     slug: str,
-    post_schema: schemas.PostSchema,
-    current_user_id: int,
+    post_update_schema: schemas.PostUpdateSchema,
+    current_user_id: int = None,
 ):
     """Updates post in database and returns it."""
+    # check_if_current_user_if_owner(post.user_id, current_user_id)
     with SessionLocal() as db:
-        post = get_post_by_slug(slug, db)
-        check_if_current_user_if_owner(post.user_id, current_user_id)
-
-        post.title = post_schema.title
-        post.body = post_schema.body
-        post.tags = services.get_all_tags_for_post_from_(post_schema, db)
-        return commit_and_refresh(db, post)
+        db.execute(
+            update(models.Post)
+            .where(models.Post.slug == slug)
+            .values(
+                title=post_update_schema.title,
+                body=post_update_schema.body,
+                # tags=services.get_all_tags_for_post_from_(
+                #     post_update_schema.tags, db
+                # ),
+            )
+        )
+        db.commit()
 
 
 def update_comment(
-    db: Session,
     comment_update_schema: schemas.CommentUpdateSchema,
-    current_user_id: int,
+    current_user_id: int = None,
 ):
     """Updates comment in database and returns it."""
+    # check_if_current_user_if_owner(comment.user_id, current_user_id)
     with SessionLocal() as db:
-        comment = _get_comment_by_id(db, comment_update_schema.id)
-        check_if_current_user_if_owner(comment.user_id, current_user_id)
-
-        comment.body = comment_update_schema.body
-        return commit_and_refresh(db, comment)
+        db.execute(
+            update(models.Comment)
+            .where(models.Comment.id == comment_update_schema.id)
+            .values(body=comment_update_schema.body)
+        )
+        db.commit()
 
 
 # * D - delete ----------------------------------------------------------------
@@ -161,36 +192,27 @@ def _delete_and_commit(db: Session, model: models.Base):
     return model
 
 
-def delete_post(slug: str, current_user_id: int):
+def delete_post(slug: str, current_user_id: int = None):
     """Deletes post from database and returns it."""
     with SessionLocal() as db:
         post = get_post_by_slug(slug, db)
-        check_if_current_user_if_owner(post.user_id, current_user_id)
+        # check_if_current_user_if_owner(post.user_id, current_user_id)
         return _delete_and_commit(db, post)
 
 
-def delete_comment(comment_id: int, current_user_id: int):
+def delete_comment(comment_id: int, current_user_id: int = None):
     """Deletes comment from database and returns it."""
     with SessionLocal() as db:
         comment = _get_comment_by_id(db, comment_id)
-        check_if_current_user_if_owner(comment.user_id, current_user_id)
+        # check_if_current_user_if_owner(comment.user_id, current_user_id)
         return _delete_and_commit(db, comment)
 
 
-def delete_like(
-    like_schema: schemas.LikeSchema, current_user_id: int
-):
+def delete_like(like_id: int, current_user_id: int = None):
     """Deletes like from database and returns it."""
     with SessionLocal() as db:
-        like = (
-            db.query(models.Like)
-            .filter(
-                models.Like.post_id == like_schema.post_id,
-                models.Like.user_id == like_schema.user_id,
-            )
-            .first()
-        )
+        like = db.query(models.Like).filter(models.Like.id == like_id).first()
         if like is None:
             raise NoResultFound
-        check_if_current_user_if_owner(like.user_id, current_user_id)
+        # check_if_current_user_if_owner(like.user_id, current_user_id)
         return _delete_and_commit(db, like)
