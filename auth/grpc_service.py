@@ -1,3 +1,5 @@
+import logging
+
 import grpc
 from concurrent import futures
 
@@ -6,15 +8,51 @@ from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 from grpc_reflection.v1alpha import reflection
 
-import auth.protos.auth_pb2 as auth_pb2
-import auth.protos.auth_pb2_grpc as auth_pb2_grpc
+from . import crud
+from .protos import auth_pb2
+from .protos import auth_pb2_grpc
+from .utils import create_access_token_by_, create_refresh_token_by_
+
+
+logger = logging.getLogger(__name__)
 
 
 class AuthServicer(auth_pb2_grpc.AuthServicer):
     """Servicer to provide auth methods that implements auth server."""
 
+    def Login(
+        self, request: auth_pb2.LoginRequest, context: grpc.ServicerContext
+    ) -> auth_pb2.LoginResponse:
+        """Logins user and returns user id with JWT tokens."""
+        logger.info("Login")
+        user = crud.get_user_by_(request.email)
+        if user is None or not user.is_valid_(request.password):
+            context.abort(
+                grpc.StatusCode.UNKNOWN, "Incorrect email or password"
+            )
+        return auth_pb2.LoginResponse(
+            user_id=user.id,
+            access_token=create_access_token_by_(user.email),
+            refresh_token=create_refresh_token_by_(user.email),
+        )
+
+    def Signup(
+        self, request: auth_pb2.SignupRequest, context: grpc.ServicerContext
+    ) -> auth_pb2.SignupResponse:
+        """Signups user and returns status."""
+        logger.info("Signup")
+        user = crud.get_user_with_(request.user)
+        if user is not None:
+            context.abort(
+                grpc.StatusCode.ALREADY_EXISTS,
+                "User with this email or username already exist",
+            )
+        crud.create_user(request.user)
+        return auth_pb2.SignupResponse(status="OK")
+
 
 async def start(address: str):
+    """Starts Auth gRPC server."""
     server = grpc.aio.server(futures.ThreadPoolExecutor(max_workers=3))
     health_servicer = health.HealthServicer(
         experimental_non_blocking=True,
@@ -34,6 +72,8 @@ async def start(address: str):
 
     server.add_insecure_port(address)
     await server.start()
+
+    logger.info(f"Auth gRPC server is listening on {address}")
 
     try:
         await server.wait_for_termination()
