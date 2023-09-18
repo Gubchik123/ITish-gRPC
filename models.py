@@ -14,7 +14,7 @@ from sqlalchemy import (
 
 from db import Base
 
-# from auth.utils import password_context, get_hashed_password
+from auth.utils import password_context, get_hashed_password
 
 
 class User(Base):
@@ -48,15 +48,14 @@ class User(Base):
         passive_deletes=True,
     )
 
-    # def __init__(self, *args, **kwargs) -> None:
-    #     """Adds hashed password to user instance."""
-    #     super(User, self).__init__(*args, **kwargs)
-    #     self.password = get_hashed_password(self.password)
+    def __init__(self, *args, **kwargs) -> None:
+        """Adds hashed password to user instance."""
+        super(User, self).__init__(*args, **kwargs)
+        self.password = get_hashed_password(self.password)
 
     def is_valid_(self, password: str) -> bool:
         """Checks if given password is valid."""
-        # return password_context.verify(password, self.password)
-        return self.password == password
+        return password_context.verify(password, self.password)
 
 
 class _ModelWithSlug:
