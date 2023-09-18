@@ -101,9 +101,7 @@ class Post(_ModelWithSlug, Base):
     user_id = Column(
         Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )
-    tags = relationship(
-        "Tag", secondary=post_tags, backref=backref("posts", lazy="dynamic")
-    )
+    tags = relationship("Tag", secondary=post_tags)
     comments = relationship(
         "Comment",
         backref=backref("post", lazy="joined"),
@@ -131,6 +129,8 @@ class Tag(_ModelWithSlug, Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(30), nullable=False, unique=True)
     slug = Column(String(30), nullable=False, unique=True)
+
+    posts = relationship("Post", secondary=post_tags)
 
     def __init__(self, *args, **kwargs) -> None:
         """For setting correct slug during initializing"""
