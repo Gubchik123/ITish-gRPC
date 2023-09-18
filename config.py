@@ -1,7 +1,13 @@
 import os
+import logging
 
 from dotenv import load_dotenv
 
+
+logging.basicConfig(
+    format="%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s",
+    level=logging.INFO,
+)
 
 load_dotenv()
 
