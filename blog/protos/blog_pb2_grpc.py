@@ -27,17 +27,17 @@ class BlogStub(object):
         self.CreatePost = channel.unary_unary(
                 '/blog.Blog/CreatePost',
                 request_serializer=blog_dot_protos_dot_blog__pb2.CreatePostRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.CreatePostResponse.FromString,
+                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
                 )
         self.UpdatePostBySlug = channel.unary_unary(
                 '/blog.Blog/UpdatePostBySlug',
                 request_serializer=blog_dot_protos_dot_blog__pb2.UpdatePostBySlugRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.UpdatePostBySlugResponse.FromString,
+                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
                 )
         self.DeletePostBySlug = channel.unary_unary(
                 '/blog.Blog/DeletePostBySlug',
                 request_serializer=blog_dot_protos_dot_blog__pb2.DeletePostBySlugRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.DeletePostBySlugResponse.FromString,
+                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
                 )
         self.GetTags = channel.unary_unary(
                 '/blog.Blog/GetTags',
@@ -57,17 +57,17 @@ class BlogStub(object):
         self.CreatePostComment = channel.unary_unary(
                 '/blog.Blog/CreatePostComment',
                 request_serializer=blog_dot_protos_dot_blog__pb2.CreatePostCommentRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.CreatePostCommentResponse.FromString,
+                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
                 )
         self.UpdatePostComment = channel.unary_unary(
                 '/blog.Blog/UpdatePostComment',
                 request_serializer=blog_dot_protos_dot_blog__pb2.UpdatePostCommentRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.UpdatePostCommentResponse.FromString,
+                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
                 )
         self.DeletePostComment = channel.unary_unary(
                 '/blog.Blog/DeletePostComment',
                 request_serializer=blog_dot_protos_dot_blog__pb2.DeletePostCommentRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.DeletePostCommentResponse.FromString,
+                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
                 )
         self.GetPostLikes = channel.unary_unary(
                 '/blog.Blog/GetPostLikes',
@@ -77,12 +77,12 @@ class BlogStub(object):
         self.CreatePostLike = channel.unary_unary(
                 '/blog.Blog/CreatePostLike',
                 request_serializer=blog_dot_protos_dot_blog__pb2.CreatePostLikeRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.CreatePostLikeResponse.FromString,
+                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
                 )
         self.DeletePostLike = channel.unary_unary(
                 '/blog.Blog/DeletePostLike',
                 request_serializer=blog_dot_protos_dot_blog__pb2.DeletePostLikeRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.DeletePostLikeResponse.FromString,
+                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
                 )
 
 
@@ -193,17 +193,17 @@ def add_BlogServicer_to_server(servicer, server):
             'CreatePost': grpc.unary_unary_rpc_method_handler(
                     servicer.CreatePost,
                     request_deserializer=blog_dot_protos_dot_blog__pb2.CreatePostRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.CreatePostResponse.SerializeToString,
+                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
             ),
             'UpdatePostBySlug': grpc.unary_unary_rpc_method_handler(
                     servicer.UpdatePostBySlug,
                     request_deserializer=blog_dot_protos_dot_blog__pb2.UpdatePostBySlugRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.UpdatePostBySlugResponse.SerializeToString,
+                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
             ),
             'DeletePostBySlug': grpc.unary_unary_rpc_method_handler(
                     servicer.DeletePostBySlug,
                     request_deserializer=blog_dot_protos_dot_blog__pb2.DeletePostBySlugRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.DeletePostBySlugResponse.SerializeToString,
+                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
             ),
             'GetTags': grpc.unary_unary_rpc_method_handler(
                     servicer.GetTags,
@@ -223,17 +223,17 @@ def add_BlogServicer_to_server(servicer, server):
             'CreatePostComment': grpc.unary_unary_rpc_method_handler(
                     servicer.CreatePostComment,
                     request_deserializer=blog_dot_protos_dot_blog__pb2.CreatePostCommentRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.CreatePostCommentResponse.SerializeToString,
+                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
             ),
             'UpdatePostComment': grpc.unary_unary_rpc_method_handler(
                     servicer.UpdatePostComment,
                     request_deserializer=blog_dot_protos_dot_blog__pb2.UpdatePostCommentRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.UpdatePostCommentResponse.SerializeToString,
+                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
             ),
             'DeletePostComment': grpc.unary_unary_rpc_method_handler(
                     servicer.DeletePostComment,
                     request_deserializer=blog_dot_protos_dot_blog__pb2.DeletePostCommentRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.DeletePostCommentResponse.SerializeToString,
+                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
             ),
             'GetPostLikes': grpc.unary_unary_rpc_method_handler(
                     servicer.GetPostLikes,
@@ -243,12 +243,12 @@ def add_BlogServicer_to_server(servicer, server):
             'CreatePostLike': grpc.unary_unary_rpc_method_handler(
                     servicer.CreatePostLike,
                     request_deserializer=blog_dot_protos_dot_blog__pb2.CreatePostLikeRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.CreatePostLikeResponse.SerializeToString,
+                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
             ),
             'DeletePostLike': grpc.unary_unary_rpc_method_handler(
                     servicer.DeletePostLike,
                     request_deserializer=blog_dot_protos_dot_blog__pb2.DeletePostLikeRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.DeletePostLikeResponse.SerializeToString,
+                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -307,7 +307,7 @@ class Blog(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/blog.Blog/CreatePost',
             blog_dot_protos_dot_blog__pb2.CreatePostRequest.SerializeToString,
-            blog_dot_protos_dot_blog__pb2.CreatePostResponse.FromString,
+            blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -324,7 +324,7 @@ class Blog(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/blog.Blog/UpdatePostBySlug',
             blog_dot_protos_dot_blog__pb2.UpdatePostBySlugRequest.SerializeToString,
-            blog_dot_protos_dot_blog__pb2.UpdatePostBySlugResponse.FromString,
+            blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -341,7 +341,7 @@ class Blog(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/blog.Blog/DeletePostBySlug',
             blog_dot_protos_dot_blog__pb2.DeletePostBySlugRequest.SerializeToString,
-            blog_dot_protos_dot_blog__pb2.DeletePostBySlugResponse.FromString,
+            blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -409,7 +409,7 @@ class Blog(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/blog.Blog/CreatePostComment',
             blog_dot_protos_dot_blog__pb2.CreatePostCommentRequest.SerializeToString,
-            blog_dot_protos_dot_blog__pb2.CreatePostCommentResponse.FromString,
+            blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -426,7 +426,7 @@ class Blog(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/blog.Blog/UpdatePostComment',
             blog_dot_protos_dot_blog__pb2.UpdatePostCommentRequest.SerializeToString,
-            blog_dot_protos_dot_blog__pb2.UpdatePostCommentResponse.FromString,
+            blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -443,7 +443,7 @@ class Blog(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/blog.Blog/DeletePostComment',
             blog_dot_protos_dot_blog__pb2.DeletePostCommentRequest.SerializeToString,
-            blog_dot_protos_dot_blog__pb2.DeletePostCommentResponse.FromString,
+            blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -477,7 +477,7 @@ class Blog(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/blog.Blog/CreatePostLike',
             blog_dot_protos_dot_blog__pb2.CreatePostLikeRequest.SerializeToString,
-            blog_dot_protos_dot_blog__pb2.CreatePostLikeResponse.FromString,
+            blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -494,6 +494,6 @@ class Blog(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/blog.Blog/DeletePostLike',
             blog_dot_protos_dot_blog__pb2.DeletePostLikeRequest.SerializeToString,
-            blog_dot_protos_dot_blog__pb2.DeletePostLikeResponse.FromString,
+            blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
