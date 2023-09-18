@@ -4,3 +4,5 @@ __pycache__/
 .env
 
 .vscode/
+
+sql_app.db
