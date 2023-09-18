@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
 from jose import jwt
+from jose.exceptions import ExpiredSignatureError, JWTError
 from passlib.context import CryptContext
 
 from config import JWT_SECRET_KEY, JWT_REFRESH_SECRET_KEY
@@ -36,3 +37,21 @@ def create_refresh_token_by_(user_email: str) -> str:
     to_encode = {"exp": expires_delta, "sub": str(user_email)}
     encoded_jwt = jwt.encode(to_encode, JWT_REFRESH_SECRET_KEY, ALGORITHM)
     return encoded_jwt
+
+
+def verify_(token: str) -> dict:
+    """Verifies an access token and returns the 'sub' claim if valid."""
+    error = email = None
+    try:
+        decoded_token = jwt.decode(
+            token, JWT_SECRET_KEY, algorithms=[ALGORITHM]
+        )
+        email = decoded_token.get("sub")
+        if email is None:
+            raise JWTError
+    except ExpiredSignatureError:
+        error = "Token has expired"
+    except JWTError:
+        error = "Invalid token"
+    finally:
+        return {"error": error, "email": email}
