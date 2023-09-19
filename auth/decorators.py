@@ -4,27 +4,25 @@ from typing import Callable
 import grpc
 from google.protobuf.message import Message
 
+from .exc import AccessDenied
 from .utils import verify_
 from .crud import get_user_by_
 
 
-def login_required(rpc_method: Callable):
+def login_required(rpc_method: Callable) -> Callable:
     """Decorator for RPC methods that require login."""
 
     @wraps(rpc_method)
-    def wrapper(self, request: Message, context: grpc.ServicerContext):
+    def wrapper(
+        servicer_instance, request: Message, context: grpc.ServicerContext
+    ):
         """Checks if user is logged in and returns user instance."""
-        token = None
         try:
             token = _get_token_from_(context.invocation_metadata())
         except IndexError:
             context.abort(
-                grpc.StatusCode.UNAUTHENTICATED, "Missing authorization header"
+                grpc.StatusCode.UNAUTHENTICATED, "Missing authorization token"
             )
-            return
-
-        if token is None:
-            context.abort(grpc.StatusCode.UNAUTHENTICATED, "Missing token")
             return
 
         verified_result = verify_(token)
@@ -34,17 +32,22 @@ def login_required(rpc_method: Callable):
                 grpc.StatusCode.UNAUTHENTICATED, verified_result["error"]
             )
             return
-        request.user_id = get_user_by_(verified_result["email"]).id
-        return rpc_method(self, request, context)
+        user = get_user_by_(verified_result["email"])
+        try:
+            return rpc_method(servicer_instance, request, context, user)
+        except AccessDenied as error:
+            context.abort(grpc.StatusCode.PERMISSION_DENIED, str(error))
+            return
 
     return wrapper
 
 
-def _get_token_from_(invocation_metadata: tuple) -> str | None:
+def _get_token_from_(context_invocation_metadata: tuple) -> str | None:
+    """Returns token from the given servicer context invocation metadata."""
     authorization_metadata = list(
         filter(
             lambda x: x.key == "authorization",
-            invocation_metadata,
+            context_invocation_metadata,
         )
     )[0]
     return authorization_metadata.value.split(" ")[1]  # Remove "Bearer "
