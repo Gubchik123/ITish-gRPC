@@ -27,21 +27,33 @@ def get_user_by_(username: str, db: Optional[Session] = None):
     return user
 
 
-def get_user_posts_by_(user_username: str):
+def get_user_posts_by_(user_username: str, limit: int, offset: int):
     """Returns user posts from database by the given username."""
     with SessionLocal() as db:
         user = get_user_by_(user_username, db)
-        return db.query(models.Post).filter_by(user_id=user.id).all()
+        return (
+            db.query(models.Post)
+            .filter_by(user_id=user.id)
+            .limit(limit)
+            .offset(offset)
+            .all()
+        )
 
 
-def get_user_comments_by_(user_username: str):
+def get_user_comments_by_(user_username: str, limit: int, offset: int):
     """Returns user comments from database by the given username."""
     with SessionLocal() as db:
         user = get_user_by_(user_username, db)
-        return db.query(models.Comment).filter_by(user_id=user.id).all()
+        return (
+            db.query(models.Comment)
+            .filter_by(user_id=user.id)
+            .limit(limit)
+            .offset(offset)
+            .all()
+        )
 
 
-def get_user_liked_posts_by_(user_username: str):
+def get_user_liked_posts_by_(user_username: str, limit: int, offset: int):
     """Returns user liked posts from database by the given username."""
     with SessionLocal() as db:
         user = get_user_by_(user_username, db)
@@ -52,6 +64,8 @@ def get_user_liked_posts_by_(user_username: str):
         return (
             db.query(models.Post)
             .filter(models.Post.id.in_(user_liked_posts_ids))
+            .limit(limit)
+            .offset(offset)
             .all()
         )
 
@@ -74,7 +88,7 @@ def update_user_with_(username: str, user_schema: UserSchema):
         db.commit()
 
 
-def delete_user_by_(username: str):
+def delete_user_with_(username: str):
     """Deletes user from database by the given username."""
     with SessionLocal() as db:
         db.execute(delete(models.User).where(models.User.username == username))
