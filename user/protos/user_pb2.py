@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 from blog.protos import blog_pb2 as blog_dot_protos_dot_blog__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16user/protos/user.proto\x12\x04user\x1a\x16\x62log/protos/blog.proto\"?\n\nUserSchema\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\"?\n\x10UserDetailSchema\x12\n\n\x02id\x18\x01 \x01(\x03\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x10\n\x08username\x18\x03 \x01(\t\",\n\x18GetUserByUsernameRequest\x12\x10\n\x08username\x18\x01 \x01(\t\"A\n\x19GetUserByUsernameResponse\x12$\n\x04user\x18\x01 \x01(\x0b\x32\x16.user.UserDetailSchema\"4\n\x13GetUserPostsRequest\x12\r\n\x05limit\x18\x01 \x01(\x03\x12\x0e\n\x06offset\x18\x02 \x01(\x03\";\n\x14GetUserPostsResponse\x12#\n\x05posts\x18\x01 \x03(\x0b\x32\x14.blog.PostListSchema\"7\n\x16GetUserCommentsRequest\x12\r\n\x05limit\x18\x01 \x01(\x03\x12\x0e\n\x06offset\x18\x02 \x01(\x03\"@\n\x17GetUserCommentsResponse\x12%\n\x08\x63omments\x18\x01 \x03(\x0b\x32\x13.blog.CommentSchema\"9\n\x18GetUserLikedPostsRequest\x12\r\n\x05limit\x18\x01 \x01(\x03\x12\x0e\n\x06offset\x18\x02 \x01(\x03\"@\n\x19GetUserLikedPostsResponse\x12#\n\x05posts\x18\x01 \x03(\x0b\x32\x14.blog.PostListSchema\"E\n\x11UpdateUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x1e\n\x04user\x18\x02 \x01(\x0b\x32\x10.user.UserSchema\"%\n\x11\x44\x65leteUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t2\xcf\x03\n\x04User\x12V\n\x11GetUserByUsername\x12\x1e.user.GetUserByUsernameRequest\x1a\x1f.user.GetUserByUsernameResponse\"\x00\x12G\n\x0cGetUserPosts\x12\x19.user.GetUserPostsRequest\x1a\x1a.user.GetUserPostsResponse\"\x00\x12P\n\x0fGetUserComments\x12\x1c.user.GetUserCommentsRequest\x1a\x1d.user.GetUserCommentsResponse\"\x00\x12V\n\x11GetUserLikedPosts\x12\x1e.user.GetUserLikedPostsRequest\x1a\x1f.user.GetUserLikedPostsResponse\"\x00\x12=\n\nUpdateUser\x12\x17.user.UpdateUserRequest\x1a\x14.blog.StatusResponse\"\x00\x12=\n\nDeleteUser\x12\x17.user.DeleteUserRequest\x1a\x14.blog.StatusResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16user/protos/user.proto\x12\x04user\x1a\x16\x62log/protos/blog.proto\"?\n\nUserSchema\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\"P\n\x10UserDetailSchema\x12\n\n\x02id\x18\x01 \x01(\x03\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x10\n\x08username\x18\x03 \x01(\t\x12\x0f\n\x07\x63reated\x18\x04 \x01(\t\",\n\x18GetUserByUsernameRequest\x12\x10\n\x08username\x18\x01 \x01(\t\"A\n\x19GetUserByUsernameResponse\x12$\n\x04user\x18\x01 \x01(\x0b\x32\x16.user.UserDetailSchema\"F\n\x13GetUserPostsRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x03\x12\x0e\n\x06offset\x18\x03 \x01(\x03\";\n\x14GetUserPostsResponse\x12#\n\x05posts\x18\x01 \x03(\x0b\x32\x14.blog.PostListSchema\"I\n\x16GetUserCommentsRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x03\x12\x0e\n\x06offset\x18\x03 \x01(\x03\"@\n\x17GetUserCommentsResponse\x12%\n\x08\x63omments\x18\x01 \x03(\x0b\x32\x13.blog.CommentSchema\"K\n\x18GetUserLikedPostsRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\r\n\x05limit\x18\x02 \x01(\x03\x12\x0e\n\x06offset\x18\x03 \x01(\x03\"@\n\x19GetUserLikedPostsResponse\x12#\n\x05posts\x18\x01 \x03(\x0b\x32\x14.blog.PostListSchema\"3\n\x11UpdateUserRequest\x12\x1e\n\x04user\x18\x02 \x01(\x0b\x32\x10.user.UserSchema\"\x13\n\x11\x44\x65leteUserRequest2\xcf\x03\n\x04User\x12V\n\x11GetUserByUsername\x12\x1e.user.GetUserByUsernameRequest\x1a\x1f.user.GetUserByUsernameResponse\"\x00\x12G\n\x0cGetUserPosts\x12\x19.user.GetUserPostsRequest\x1a\x1a.user.GetUserPostsResponse\"\x00\x12P\n\x0fGetUserComments\x12\x1c.user.GetUserCommentsRequest\x1a\x1d.user.GetUserCommentsResponse\"\x00\x12V\n\x11GetUserLikedPosts\x12\x1e.user.GetUserLikedPostsRequest\x1a\x1f.user.GetUserLikedPostsResponse\"\x00\x12=\n\nUpdateUser\x12\x17.user.UpdateUserRequest\x1a\x14.blog.StatusResponse\"\x00\x12=\n\nDeleteUser\x12\x17.user.DeleteUserRequest\x1a\x14.blog.StatusResponse\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -25,27 +25,27 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_USERSCHEMA']._serialized_start=56
   _globals['_USERSCHEMA']._serialized_end=119
   _globals['_USERDETAILSCHEMA']._serialized_start=121
-  _globals['_USERDETAILSCHEMA']._serialized_end=184
-  _globals['_GETUSERBYUSERNAMEREQUEST']._serialized_start=186
-  _globals['_GETUSERBYUSERNAMEREQUEST']._serialized_end=230
-  _globals['_GETUSERBYUSERNAMERESPONSE']._serialized_start=232
-  _globals['_GETUSERBYUSERNAMERESPONSE']._serialized_end=297
-  _globals['_GETUSERPOSTSREQUEST']._serialized_start=299
-  _globals['_GETUSERPOSTSREQUEST']._serialized_end=351
-  _globals['_GETUSERPOSTSRESPONSE']._serialized_start=353
-  _globals['_GETUSERPOSTSRESPONSE']._serialized_end=412
-  _globals['_GETUSERCOMMENTSREQUEST']._serialized_start=414
-  _globals['_GETUSERCOMMENTSREQUEST']._serialized_end=469
-  _globals['_GETUSERCOMMENTSRESPONSE']._serialized_start=471
-  _globals['_GETUSERCOMMENTSRESPONSE']._serialized_end=535
-  _globals['_GETUSERLIKEDPOSTSREQUEST']._serialized_start=537
-  _globals['_GETUSERLIKEDPOSTSREQUEST']._serialized_end=594
-  _globals['_GETUSERLIKEDPOSTSRESPONSE']._serialized_start=596
-  _globals['_GETUSERLIKEDPOSTSRESPONSE']._serialized_end=660
-  _globals['_UPDATEUSERREQUEST']._serialized_start=662
-  _globals['_UPDATEUSERREQUEST']._serialized_end=731
-  _globals['_DELETEUSERREQUEST']._serialized_start=733
-  _globals['_DELETEUSERREQUEST']._serialized_end=770
-  _globals['_USER']._serialized_start=773
-  _globals['_USER']._serialized_end=1236
+  _globals['_USERDETAILSCHEMA']._serialized_end=201
+  _globals['_GETUSERBYUSERNAMEREQUEST']._serialized_start=203
+  _globals['_GETUSERBYUSERNAMEREQUEST']._serialized_end=247
+  _globals['_GETUSERBYUSERNAMERESPONSE']._serialized_start=249
+  _globals['_GETUSERBYUSERNAMERESPONSE']._serialized_end=314
+  _globals['_GETUSERPOSTSREQUEST']._serialized_start=316
+  _globals['_GETUSERPOSTSREQUEST']._serialized_end=386
+  _globals['_GETUSERPOSTSRESPONSE']._serialized_start=388
+  _globals['_GETUSERPOSTSRESPONSE']._serialized_end=447
+  _globals['_GETUSERCOMMENTSREQUEST']._serialized_start=449
+  _globals['_GETUSERCOMMENTSREQUEST']._serialized_end=522
+  _globals['_GETUSERCOMMENTSRESPONSE']._serialized_start=524
+  _globals['_GETUSERCOMMENTSRESPONSE']._serialized_end=588
+  _globals['_GETUSERLIKEDPOSTSREQUEST']._serialized_start=590
+  _globals['_GETUSERLIKEDPOSTSREQUEST']._serialized_end=665
+  _globals['_GETUSERLIKEDPOSTSRESPONSE']._serialized_start=667
+  _globals['_GETUSERLIKEDPOSTSRESPONSE']._serialized_end=731
+  _globals['_UPDATEUSERREQUEST']._serialized_start=733
+  _globals['_UPDATEUSERREQUEST']._serialized_end=784
+  _globals['_DELETEUSERREQUEST']._serialized_start=786
+  _globals['_DELETEUSERREQUEST']._serialized_end=805
+  _globals['_USER']._serialized_start=808
+  _globals['_USER']._serialized_end=1271
 # @@protoc_insertion_point(module_scope)

@@ -29,6 +29,7 @@ message UserDetailSchema {
     int64 id = 1;
     string email = 2;
     string username = 3;
+    string created = 4;
 }
 
 // Request - responses --------------------------------------------------------------------
@@ -43,24 +44,27 @@ message GetUserByUsernameResponse {
 }
 
 message GetUserPostsRequest {
-    int64 limit = 1;
-    int64 offset = 2;
+    string username = 1;
+    int64 limit = 2;
+    int64 offset = 3;
 }
 message GetUserPostsResponse {
     repeated blog.PostListSchema posts = 1;
 }
 
 message GetUserCommentsRequest {
-    int64 limit = 1;
-    int64 offset = 2;
+    string username = 1;
+    int64 limit = 2;
+    int64 offset = 3;
 }
 message GetUserCommentsResponse {
     repeated blog.CommentSchema comments = 1;
 }
 
 message GetUserLikedPostsRequest {
-    int64 limit = 1;
-    int64 offset = 2;
+    string username = 1;
+    int64 limit = 2;
+    int64 offset = 3;
 }
 message GetUserLikedPostsResponse {
     repeated blog.PostListSchema posts = 1;
@@ -69,10 +73,7 @@ message GetUserLikedPostsResponse {
 // Processing requests ----------------------------------------------------------
 
 message UpdateUserRequest {
-    string username = 1;
     UserSchema user = 2;
 }
 
-message DeleteUserRequest {
-    string username = 1;
-}
+message DeleteUserRequest {}
