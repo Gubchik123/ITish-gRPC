@@ -15,485 +15,650 @@ class BlogStub(object):
             channel: A grpc.Channel.
         """
         self.GetPosts = channel.unary_unary(
-                '/blog.Blog/GetPosts',
-                request_serializer=blog_dot_protos_dot_blog__pb2.GetPostsRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.GetPostsResponse.FromString,
-                )
+            "/blog.Blog/GetPosts",
+            request_serializer=blog_dot_protos_dot_blog__pb2.GetPostsRequest.SerializeToString,
+            response_deserializer=blog_dot_protos_dot_blog__pb2.GetPostsResponse.FromString,
+        )
         self.GetPostBySlug = channel.unary_unary(
-                '/blog.Blog/GetPostBySlug',
-                request_serializer=blog_dot_protos_dot_blog__pb2.GetPostBySlugRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.GetPostBySlugResponse.FromString,
-                )
+            "/blog.Blog/GetPostBySlug",
+            request_serializer=blog_dot_protos_dot_blog__pb2.GetPostBySlugRequest.SerializeToString,
+            response_deserializer=blog_dot_protos_dot_blog__pb2.GetPostBySlugResponse.FromString,
+        )
         self.CreatePost = channel.unary_unary(
-                '/blog.Blog/CreatePost',
-                request_serializer=blog_dot_protos_dot_blog__pb2.CreatePostRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-                )
+            "/blog.Blog/CreatePost",
+            request_serializer=blog_dot_protos_dot_blog__pb2.CreatePostRequest.SerializeToString,
+            response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
+        )
         self.UpdatePostBySlug = channel.unary_unary(
-                '/blog.Blog/UpdatePostBySlug',
-                request_serializer=blog_dot_protos_dot_blog__pb2.UpdatePostBySlugRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-                )
+            "/blog.Blog/UpdatePostBySlug",
+            request_serializer=blog_dot_protos_dot_blog__pb2.UpdatePostBySlugRequest.SerializeToString,
+            response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
+        )
         self.DeletePostBySlug = channel.unary_unary(
-                '/blog.Blog/DeletePostBySlug',
-                request_serializer=blog_dot_protos_dot_blog__pb2.DeletePostBySlugRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-                )
+            "/blog.Blog/DeletePostBySlug",
+            request_serializer=blog_dot_protos_dot_blog__pb2.DeletePostBySlugRequest.SerializeToString,
+            response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
+        )
         self.GetTags = channel.unary_unary(
-                '/blog.Blog/GetTags',
-                request_serializer=blog_dot_protos_dot_blog__pb2.GetTagsRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.GetTagsResponse.FromString,
-                )
+            "/blog.Blog/GetTags",
+            request_serializer=blog_dot_protos_dot_blog__pb2.GetTagsRequest.SerializeToString,
+            response_deserializer=blog_dot_protos_dot_blog__pb2.GetTagsResponse.FromString,
+        )
         self.GetTagBySlug = channel.unary_unary(
-                '/blog.Blog/GetTagBySlug',
-                request_serializer=blog_dot_protos_dot_blog__pb2.GetTagBySlugRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.GetTagBySlugResponse.FromString,
-                )
+            "/blog.Blog/GetTagBySlug",
+            request_serializer=blog_dot_protos_dot_blog__pb2.GetTagBySlugRequest.SerializeToString,
+            response_deserializer=blog_dot_protos_dot_blog__pb2.GetTagBySlugResponse.FromString,
+        )
         self.GetPostComments = channel.unary_unary(
-                '/blog.Blog/GetPostComments',
-                request_serializer=blog_dot_protos_dot_blog__pb2.GetPostCommentsRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.GetPostCommentsResponse.FromString,
-                )
+            "/blog.Blog/GetPostComments",
+            request_serializer=blog_dot_protos_dot_blog__pb2.GetPostCommentsRequest.SerializeToString,
+            response_deserializer=blog_dot_protos_dot_blog__pb2.GetPostCommentsResponse.FromString,
+        )
         self.CreatePostComment = channel.unary_unary(
-                '/blog.Blog/CreatePostComment',
-                request_serializer=blog_dot_protos_dot_blog__pb2.CreatePostCommentRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-                )
+            "/blog.Blog/CreatePostComment",
+            request_serializer=blog_dot_protos_dot_blog__pb2.CreatePostCommentRequest.SerializeToString,
+            response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
+        )
         self.UpdatePostComment = channel.unary_unary(
-                '/blog.Blog/UpdatePostComment',
-                request_serializer=blog_dot_protos_dot_blog__pb2.UpdatePostCommentRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-                )
+            "/blog.Blog/UpdatePostComment",
+            request_serializer=blog_dot_protos_dot_blog__pb2.UpdatePostCommentRequest.SerializeToString,
+            response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
+        )
         self.DeletePostComment = channel.unary_unary(
-                '/blog.Blog/DeletePostComment',
-                request_serializer=blog_dot_protos_dot_blog__pb2.DeletePostCommentRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-                )
+            "/blog.Blog/DeletePostComment",
+            request_serializer=blog_dot_protos_dot_blog__pb2.DeletePostCommentRequest.SerializeToString,
+            response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
+        )
         self.GetPostLikes = channel.unary_unary(
-                '/blog.Blog/GetPostLikes',
-                request_serializer=blog_dot_protos_dot_blog__pb2.GetPostLikesRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.GetPostLikesResponse.FromString,
-                )
+            "/blog.Blog/GetPostLikes",
+            request_serializer=blog_dot_protos_dot_blog__pb2.GetPostLikesRequest.SerializeToString,
+            response_deserializer=blog_dot_protos_dot_blog__pb2.GetPostLikesResponse.FromString,
+        )
         self.CreatePostLike = channel.unary_unary(
-                '/blog.Blog/CreatePostLike',
-                request_serializer=blog_dot_protos_dot_blog__pb2.CreatePostLikeRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-                )
+            "/blog.Blog/CreatePostLike",
+            request_serializer=blog_dot_protos_dot_blog__pb2.CreatePostLikeRequest.SerializeToString,
+            response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
+        )
         self.DeletePostLike = channel.unary_unary(
-                '/blog.Blog/DeletePostLike',
-                request_serializer=blog_dot_protos_dot_blog__pb2.DeletePostLikeRequest.SerializeToString,
-                response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-                )
+            "/blog.Blog/DeletePostLike",
+            request_serializer=blog_dot_protos_dot_blog__pb2.DeletePostLikeRequest.SerializeToString,
+            response_deserializer=blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
+        )
 
 
 class BlogServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def GetPosts(self, request, context):
-        """Post -------------------------------------------------------------------------------
-        """
+        """Post -------------------------------------------------------------------------------"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetPostBySlug(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def CreatePost(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def UpdatePostBySlug(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def DeletePostBySlug(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetTags(self, request, context):
-        """Tag --------------------------------------------------------------------------------
-        """
+        """Tag --------------------------------------------------------------------------------"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetTagBySlug(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetPostComments(self, request, context):
-        """Comment ----------------------------------------------------------------------------
-        """
+        """Comment ----------------------------------------------------------------------------"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def CreatePostComment(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def UpdatePostComment(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def DeletePostComment(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def GetPostLikes(self, request, context):
-        """Like -------------------------------------------------------------------------------
-        """
+        """Like -------------------------------------------------------------------------------"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def CreatePostLike(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def DeletePostLike(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_BlogServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetPosts': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetPosts,
-                    request_deserializer=blog_dot_protos_dot_blog__pb2.GetPostsRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.GetPostsResponse.SerializeToString,
-            ),
-            'GetPostBySlug': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetPostBySlug,
-                    request_deserializer=blog_dot_protos_dot_blog__pb2.GetPostBySlugRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.GetPostBySlugResponse.SerializeToString,
-            ),
-            'CreatePost': grpc.unary_unary_rpc_method_handler(
-                    servicer.CreatePost,
-                    request_deserializer=blog_dot_protos_dot_blog__pb2.CreatePostRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
-            ),
-            'UpdatePostBySlug': grpc.unary_unary_rpc_method_handler(
-                    servicer.UpdatePostBySlug,
-                    request_deserializer=blog_dot_protos_dot_blog__pb2.UpdatePostBySlugRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
-            ),
-            'DeletePostBySlug': grpc.unary_unary_rpc_method_handler(
-                    servicer.DeletePostBySlug,
-                    request_deserializer=blog_dot_protos_dot_blog__pb2.DeletePostBySlugRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
-            ),
-            'GetTags': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetTags,
-                    request_deserializer=blog_dot_protos_dot_blog__pb2.GetTagsRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.GetTagsResponse.SerializeToString,
-            ),
-            'GetTagBySlug': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetTagBySlug,
-                    request_deserializer=blog_dot_protos_dot_blog__pb2.GetTagBySlugRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.GetTagBySlugResponse.SerializeToString,
-            ),
-            'GetPostComments': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetPostComments,
-                    request_deserializer=blog_dot_protos_dot_blog__pb2.GetPostCommentsRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.GetPostCommentsResponse.SerializeToString,
-            ),
-            'CreatePostComment': grpc.unary_unary_rpc_method_handler(
-                    servicer.CreatePostComment,
-                    request_deserializer=blog_dot_protos_dot_blog__pb2.CreatePostCommentRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
-            ),
-            'UpdatePostComment': grpc.unary_unary_rpc_method_handler(
-                    servicer.UpdatePostComment,
-                    request_deserializer=blog_dot_protos_dot_blog__pb2.UpdatePostCommentRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
-            ),
-            'DeletePostComment': grpc.unary_unary_rpc_method_handler(
-                    servicer.DeletePostComment,
-                    request_deserializer=blog_dot_protos_dot_blog__pb2.DeletePostCommentRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
-            ),
-            'GetPostLikes': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetPostLikes,
-                    request_deserializer=blog_dot_protos_dot_blog__pb2.GetPostLikesRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.GetPostLikesResponse.SerializeToString,
-            ),
-            'CreatePostLike': grpc.unary_unary_rpc_method_handler(
-                    servicer.CreatePostLike,
-                    request_deserializer=blog_dot_protos_dot_blog__pb2.CreatePostLikeRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
-            ),
-            'DeletePostLike': grpc.unary_unary_rpc_method_handler(
-                    servicer.DeletePostLike,
-                    request_deserializer=blog_dot_protos_dot_blog__pb2.DeletePostLikeRequest.FromString,
-                    response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
-            ),
+        "GetPosts": grpc.unary_unary_rpc_method_handler(
+            servicer.GetPosts,
+            request_deserializer=blog_dot_protos_dot_blog__pb2.GetPostsRequest.FromString,
+            response_serializer=blog_dot_protos_dot_blog__pb2.GetPostsResponse.SerializeToString,
+        ),
+        "GetPostBySlug": grpc.unary_unary_rpc_method_handler(
+            servicer.GetPostBySlug,
+            request_deserializer=blog_dot_protos_dot_blog__pb2.GetPostBySlugRequest.FromString,
+            response_serializer=blog_dot_protos_dot_blog__pb2.GetPostBySlugResponse.SerializeToString,
+        ),
+        "CreatePost": grpc.unary_unary_rpc_method_handler(
+            servicer.CreatePost,
+            request_deserializer=blog_dot_protos_dot_blog__pb2.CreatePostRequest.FromString,
+            response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
+        ),
+        "UpdatePostBySlug": grpc.unary_unary_rpc_method_handler(
+            servicer.UpdatePostBySlug,
+            request_deserializer=blog_dot_protos_dot_blog__pb2.UpdatePostBySlugRequest.FromString,
+            response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
+        ),
+        "DeletePostBySlug": grpc.unary_unary_rpc_method_handler(
+            servicer.DeletePostBySlug,
+            request_deserializer=blog_dot_protos_dot_blog__pb2.DeletePostBySlugRequest.FromString,
+            response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
+        ),
+        "GetTags": grpc.unary_unary_rpc_method_handler(
+            servicer.GetTags,
+            request_deserializer=blog_dot_protos_dot_blog__pb2.GetTagsRequest.FromString,
+            response_serializer=blog_dot_protos_dot_blog__pb2.GetTagsResponse.SerializeToString,
+        ),
+        "GetTagBySlug": grpc.unary_unary_rpc_method_handler(
+            servicer.GetTagBySlug,
+            request_deserializer=blog_dot_protos_dot_blog__pb2.GetTagBySlugRequest.FromString,
+            response_serializer=blog_dot_protos_dot_blog__pb2.GetTagBySlugResponse.SerializeToString,
+        ),
+        "GetPostComments": grpc.unary_unary_rpc_method_handler(
+            servicer.GetPostComments,
+            request_deserializer=blog_dot_protos_dot_blog__pb2.GetPostCommentsRequest.FromString,
+            response_serializer=blog_dot_protos_dot_blog__pb2.GetPostCommentsResponse.SerializeToString,
+        ),
+        "CreatePostComment": grpc.unary_unary_rpc_method_handler(
+            servicer.CreatePostComment,
+            request_deserializer=blog_dot_protos_dot_blog__pb2.CreatePostCommentRequest.FromString,
+            response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
+        ),
+        "UpdatePostComment": grpc.unary_unary_rpc_method_handler(
+            servicer.UpdatePostComment,
+            request_deserializer=blog_dot_protos_dot_blog__pb2.UpdatePostCommentRequest.FromString,
+            response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
+        ),
+        "DeletePostComment": grpc.unary_unary_rpc_method_handler(
+            servicer.DeletePostComment,
+            request_deserializer=blog_dot_protos_dot_blog__pb2.DeletePostCommentRequest.FromString,
+            response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
+        ),
+        "GetPostLikes": grpc.unary_unary_rpc_method_handler(
+            servicer.GetPostLikes,
+            request_deserializer=blog_dot_protos_dot_blog__pb2.GetPostLikesRequest.FromString,
+            response_serializer=blog_dot_protos_dot_blog__pb2.GetPostLikesResponse.SerializeToString,
+        ),
+        "CreatePostLike": grpc.unary_unary_rpc_method_handler(
+            servicer.CreatePostLike,
+            request_deserializer=blog_dot_protos_dot_blog__pb2.CreatePostLikeRequest.FromString,
+            response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
+        ),
+        "DeletePostLike": grpc.unary_unary_rpc_method_handler(
+            servicer.DeletePostLike,
+            request_deserializer=blog_dot_protos_dot_blog__pb2.DeletePostLikeRequest.FromString,
+            response_serializer=blog_dot_protos_dot_blog__pb2.StatusResponse.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'blog.Blog', rpc_method_handlers)
+        "blog.Blog", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class Blog(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def GetPosts(request,
+    def GetPosts(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/blog.Blog/GetPosts',
+            "/blog.Blog/GetPosts",
             blog_dot_protos_dot_blog__pb2.GetPostsRequest.SerializeToString,
             blog_dot_protos_dot_blog__pb2.GetPostsResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetPostBySlug(request,
+    def GetPostBySlug(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/blog.Blog/GetPostBySlug',
+            "/blog.Blog/GetPostBySlug",
             blog_dot_protos_dot_blog__pb2.GetPostBySlugRequest.SerializeToString,
             blog_dot_protos_dot_blog__pb2.GetPostBySlugResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def CreatePost(request,
+    def CreatePost(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/blog.Blog/CreatePost',
+            "/blog.Blog/CreatePost",
             blog_dot_protos_dot_blog__pb2.CreatePostRequest.SerializeToString,
             blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def UpdatePostBySlug(request,
+    def UpdatePostBySlug(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/blog.Blog/UpdatePostBySlug',
+            "/blog.Blog/UpdatePostBySlug",
             blog_dot_protos_dot_blog__pb2.UpdatePostBySlugRequest.SerializeToString,
             blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def DeletePostBySlug(request,
+    def DeletePostBySlug(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/blog.Blog/DeletePostBySlug',
+            "/blog.Blog/DeletePostBySlug",
             blog_dot_protos_dot_blog__pb2.DeletePostBySlugRequest.SerializeToString,
             blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetTags(request,
+    def GetTags(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/blog.Blog/GetTags',
+            "/blog.Blog/GetTags",
             blog_dot_protos_dot_blog__pb2.GetTagsRequest.SerializeToString,
             blog_dot_protos_dot_blog__pb2.GetTagsResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetTagBySlug(request,
+    def GetTagBySlug(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/blog.Blog/GetTagBySlug',
+            "/blog.Blog/GetTagBySlug",
             blog_dot_protos_dot_blog__pb2.GetTagBySlugRequest.SerializeToString,
             blog_dot_protos_dot_blog__pb2.GetTagBySlugResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetPostComments(request,
+    def GetPostComments(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/blog.Blog/GetPostComments',
+            "/blog.Blog/GetPostComments",
             blog_dot_protos_dot_blog__pb2.GetPostCommentsRequest.SerializeToString,
             blog_dot_protos_dot_blog__pb2.GetPostCommentsResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def CreatePostComment(request,
+    def CreatePostComment(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/blog.Blog/CreatePostComment',
+            "/blog.Blog/CreatePostComment",
             blog_dot_protos_dot_blog__pb2.CreatePostCommentRequest.SerializeToString,
             blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def UpdatePostComment(request,
+    def UpdatePostComment(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/blog.Blog/UpdatePostComment',
+            "/blog.Blog/UpdatePostComment",
             blog_dot_protos_dot_blog__pb2.UpdatePostCommentRequest.SerializeToString,
             blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def DeletePostComment(request,
+    def DeletePostComment(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/blog.Blog/DeletePostComment',
+            "/blog.Blog/DeletePostComment",
             blog_dot_protos_dot_blog__pb2.DeletePostCommentRequest.SerializeToString,
             blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def GetPostLikes(request,
+    def GetPostLikes(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/blog.Blog/GetPostLikes',
+            "/blog.Blog/GetPostLikes",
             blog_dot_protos_dot_blog__pb2.GetPostLikesRequest.SerializeToString,
             blog_dot_protos_dot_blog__pb2.GetPostLikesResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def CreatePostLike(request,
+    def CreatePostLike(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/blog.Blog/CreatePostLike',
+            "/blog.Blog/CreatePostLike",
             blog_dot_protos_dot_blog__pb2.CreatePostLikeRequest.SerializeToString,
             blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def DeletePostLike(request,
+    def DeletePostLike(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/blog.Blog/DeletePostLike',
+            "/blog.Blog/DeletePostLike",
             blog_dot_protos_dot_blog__pb2.DeletePostLikeRequest.SerializeToString,
             blog_dot_protos_dot_blog__pb2.StatusResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )

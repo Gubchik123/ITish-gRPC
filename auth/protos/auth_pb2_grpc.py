@@ -15,15 +15,15 @@ class AuthStub(object):
             channel: A grpc.Channel.
         """
         self.Login = channel.unary_unary(
-                '/auth.Auth/Login',
-                request_serializer=auth_dot_protos_dot_auth__pb2.LoginRequest.SerializeToString,
-                response_deserializer=auth_dot_protos_dot_auth__pb2.LoginResponse.FromString,
-                )
+            "/auth.Auth/Login",
+            request_serializer=auth_dot_protos_dot_auth__pb2.LoginRequest.SerializeToString,
+            response_deserializer=auth_dot_protos_dot_auth__pb2.LoginResponse.FromString,
+        )
         self.Signup = channel.unary_unary(
-                '/auth.Auth/Signup',
-                request_serializer=auth_dot_protos_dot_auth__pb2.SignupRequest.SerializeToString,
-                response_deserializer=auth_dot_protos_dot_auth__pb2.SignupResponse.FromString,
-                )
+            "/auth.Auth/Signup",
+            request_serializer=auth_dot_protos_dot_auth__pb2.SignupRequest.SerializeToString,
+            response_deserializer=auth_dot_protos_dot_auth__pb2.SignupResponse.FromString,
+        )
 
 
 class AuthServicer(object):
@@ -32,68 +32,93 @@ class AuthServicer(object):
     def Login(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def Signup(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_AuthServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Login': grpc.unary_unary_rpc_method_handler(
-                    servicer.Login,
-                    request_deserializer=auth_dot_protos_dot_auth__pb2.LoginRequest.FromString,
-                    response_serializer=auth_dot_protos_dot_auth__pb2.LoginResponse.SerializeToString,
-            ),
-            'Signup': grpc.unary_unary_rpc_method_handler(
-                    servicer.Signup,
-                    request_deserializer=auth_dot_protos_dot_auth__pb2.SignupRequest.FromString,
-                    response_serializer=auth_dot_protos_dot_auth__pb2.SignupResponse.SerializeToString,
-            ),
+        "Login": grpc.unary_unary_rpc_method_handler(
+            servicer.Login,
+            request_deserializer=auth_dot_protos_dot_auth__pb2.LoginRequest.FromString,
+            response_serializer=auth_dot_protos_dot_auth__pb2.LoginResponse.SerializeToString,
+        ),
+        "Signup": grpc.unary_unary_rpc_method_handler(
+            servicer.Signup,
+            request_deserializer=auth_dot_protos_dot_auth__pb2.SignupRequest.FromString,
+            response_serializer=auth_dot_protos_dot_auth__pb2.SignupResponse.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'auth.Auth', rpc_method_handlers)
+        "auth.Auth", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class Auth(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def Login(request,
+    def Login(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/auth.Auth/Login',
+            "/auth.Auth/Login",
             auth_dot_protos_dot_auth__pb2.LoginRequest.SerializeToString,
             auth_dot_protos_dot_auth__pb2.LoginResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def Signup(request,
+    def Signup(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/auth.Auth/Signup',
+            "/auth.Auth/Signup",
             auth_dot_protos_dot_auth__pb2.SignupRequest.SerializeToString,
             auth_dot_protos_dot_auth__pb2.SignupResponse.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
