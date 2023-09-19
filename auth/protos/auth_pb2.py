@@ -11,9 +11,10 @@ from google.protobuf.internal import builder as _builder
 _sym_db = _symbol_database.Default()
 
 
+from user.protos import user_pb2 as user_dot_protos_dot_user__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16\x61uth/protos/auth.proto\x12\x04\x61uth\"?\n\nUserSchema\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x10\n\x08password\x18\x03 \x01(\t\"/\n\x0cLoginRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"M\n\rLoginResponse\x12\x0f\n\x07user_id\x18\x01 \x01(\x03\x12\x14\n\x0c\x61\x63\x63\x65ss_token\x18\x02 \x01(\t\x12\x15\n\rrefresh_token\x18\x03 \x01(\t\"/\n\rSignupRequest\x12\x1e\n\x04user\x18\x01 \x01(\x0b\x32\x10.auth.UserSchema\" \n\x0eSignupResponse\x12\x0e\n\x06status\x18\x01 \x01(\t2q\n\x04\x41uth\x12\x32\n\x05Login\x12\x12.auth.LoginRequest\x1a\x13.auth.LoginResponse\"\x00\x12\x35\n\x06Signup\x12\x13.auth.SignupRequest\x1a\x14.auth.SignupResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16\x61uth/protos/auth.proto\x12\x04\x61uth\x1a\x16user/protos/user.proto\"/\n\x0cLoginRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"M\n\rLoginResponse\x12\x0f\n\x07user_id\x18\x01 \x01(\x03\x12\x14\n\x0c\x61\x63\x63\x65ss_token\x18\x02 \x01(\t\x12\x15\n\rrefresh_token\x18\x03 \x01(\t\"/\n\rSignupRequest\x12\x1e\n\x04user\x18\x01 \x01(\x0b\x32\x10.user.UserSchema\" \n\x0eSignupResponse\x12\x0e\n\x06status\x18\x01 \x01(\t2q\n\x04\x41uth\x12\x32\n\x05Login\x12\x12.auth.LoginRequest\x1a\x13.auth.LoginResponse\"\x00\x12\x35\n\x06Signup\x12\x13.auth.SignupRequest\x1a\x14.auth.SignupResponse\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -21,16 +22,14 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'auth.protos.auth_pb2', _glo
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _globals['_USERSCHEMA']._serialized_start=32
-  _globals['_USERSCHEMA']._serialized_end=95
-  _globals['_LOGINREQUEST']._serialized_start=97
-  _globals['_LOGINREQUEST']._serialized_end=144
-  _globals['_LOGINRESPONSE']._serialized_start=146
-  _globals['_LOGINRESPONSE']._serialized_end=223
-  _globals['_SIGNUPREQUEST']._serialized_start=225
-  _globals['_SIGNUPREQUEST']._serialized_end=272
-  _globals['_SIGNUPRESPONSE']._serialized_start=274
-  _globals['_SIGNUPRESPONSE']._serialized_end=306
-  _globals['_AUTH']._serialized_start=308
-  _globals['_AUTH']._serialized_end=421
+  _globals['_LOGINREQUEST']._serialized_start=56
+  _globals['_LOGINREQUEST']._serialized_end=103
+  _globals['_LOGINRESPONSE']._serialized_start=105
+  _globals['_LOGINRESPONSE']._serialized_end=182
+  _globals['_SIGNUPREQUEST']._serialized_start=184
+  _globals['_SIGNUPREQUEST']._serialized_end=231
+  _globals['_SIGNUPRESPONSE']._serialized_start=233
+  _globals['_SIGNUPRESPONSE']._serialized_end=265
+  _globals['_AUTH']._serialized_start=267
+  _globals['_AUTH']._serialized_end=380
 # @@protoc_insertion_point(module_scope)

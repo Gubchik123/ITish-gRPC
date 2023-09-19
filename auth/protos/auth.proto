@@ -4,17 +4,11 @@ syntax = "proto3";
 
 package auth;
 
+import "user/protos/user.proto";
+
 service Auth {
     rpc Login(LoginRequest) returns (LoginResponse) {}
     rpc Signup(SignupRequest) returns (SignupResponse) {}
-}
-
-// Structures -----------------------------------------------------------------------------
-
-message UserSchema {
-    string email = 1;
-    string username = 2;
-    string password = 3;
 }
 
 // Request - responses --------------------------------------------------------------------
@@ -30,7 +24,7 @@ message LoginResponse {
 }
 
 message SignupRequest {
-    UserSchema user = 1;
+    user.UserSchema user = 1;
 }
 message SignupResponse {
     string status = 1;

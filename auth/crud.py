@@ -1,7 +1,7 @@
 from models import User
 from db import SessionLocal, add_commit_and_refresh
 
-from .protos.auth_pb2 import UserSchema
+from user.protos.user_pb2 import UserSchema
 
 
 def get_user_with_(user_schema: UserSchema):

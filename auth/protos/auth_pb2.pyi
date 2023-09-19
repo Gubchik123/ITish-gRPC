@@ -1,18 +1,9 @@
+from user.protos import user_pb2 as _user_pb2
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
-
-class UserSchema(_message.Message):
-    __slots__ = ["email", "username", "password"]
-    EMAIL_FIELD_NUMBER: _ClassVar[int]
-    USERNAME_FIELD_NUMBER: _ClassVar[int]
-    PASSWORD_FIELD_NUMBER: _ClassVar[int]
-    email: str
-    username: str
-    password: str
-    def __init__(self, email: _Optional[str] = ..., username: _Optional[str] = ..., password: _Optional[str] = ...) -> None: ...
 
 class LoginRequest(_message.Message):
     __slots__ = ["email", "password"]
@@ -35,8 +26,8 @@ class LoginResponse(_message.Message):
 class SignupRequest(_message.Message):
     __slots__ = ["user"]
     USER_FIELD_NUMBER: _ClassVar[int]
-    user: UserSchema
-    def __init__(self, user: _Optional[_Union[UserSchema, _Mapping]] = ...) -> None: ...
+    user: _user_pb2.UserSchema
+    def __init__(self, user: _Optional[_Union[_user_pb2.UserSchema, _Mapping]] = ...) -> None: ...
 
 class SignupResponse(_message.Message):
     __slots__ = ["status"]
