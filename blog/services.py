@@ -19,14 +19,14 @@ def _create_non_existent_tags_from_(
     db.commit()
 
 
-def _get_tag_titles_from_(tags: str, db: Session):
+def _get_tag_titles_from_(tags: str, db: Session) -> list[str]:
     """Returns tag titles from the given string."""
     tag_titles = [tag_title.strip().lower() for tag_title in tags.split(",")]
     _create_non_existent_tags_from_(tag_titles, db)
     return tag_titles
 
 
-def get_all_tags_for_post_from_(post_tags: str, db: Session):
+def get_all_tags_for_post_from_(post_tags: str, db: Session) -> list[Tag]:
     """Returns all tags for post from given post tags."""
     return (
         [

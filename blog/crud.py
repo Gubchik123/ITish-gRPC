@@ -18,7 +18,9 @@ logger = logging.getLogger(__name__)
 # * C - create ----------------------------------------------------------------
 
 
-def create_post(post_schema: schemas.PostCreateSchema, current_user_id: int):
+def create_post(
+    post_schema: schemas.PostCreateSchema, current_user_id: int
+) -> models.Post:
     """Creates post in database and returns it."""
     with SessionLocal() as db:
         post = models.Post(
@@ -32,7 +34,7 @@ def create_post(post_schema: schemas.PostCreateSchema, current_user_id: int):
 
 def create_comment(
     comment_schema: schemas.CommentCreateSchema, current_user_id: int
-):
+) -> models.Comment:
     """Creates comment in database and returns it."""
     with SessionLocal() as db:
         comment = models.Comment(
@@ -43,7 +45,7 @@ def create_comment(
         return add_commit_and_refresh(db, comment)
 
 
-def create_like(post_id: int, current_user_id: int):
+def create_like(post_id: int, current_user_id: int) -> models.Like:
     """Creates like in database and returns it."""
     with SessionLocal() as db:
         like = models.Like(user_id=current_user_id, post_id=post_id)
@@ -53,7 +55,7 @@ def create_like(post_id: int, current_user_id: int):
 # * R - read ------------------------------------------------------------------
 
 
-def get_all_posts(limit: int, offset: int):
+def get_all_posts(limit: int, offset: int) -> list[models.Post]:
     """Returns all posts from database."""
     with SessionLocal() as db:
         return (
@@ -66,13 +68,13 @@ def get_all_posts(limit: int, offset: int):
         )
 
 
-def get_all_tags(limit: int, offset: int):
+def get_all_tags(limit: int, offset: int) -> list[models.Tag]:
     """Returns all tags from database."""
     with SessionLocal() as db:
         return db.query(models.Tag).limit(limit).offset(offset).all()
 
 
-def get_post_by_slug(slug: str, db: Optional[Session] = None):
+def get_post_by_slug(slug: str, db: Optional[Session] = None) -> models.Post:
     """Returns post from database by slug."""
     if db is None:
         logger.debug("DB session is None in get_post_by_slug")
@@ -89,7 +91,7 @@ def get_post_by_slug(slug: str, db: Optional[Session] = None):
     return post
 
 
-def get_tag_by_slug(slug: str):
+def get_tag_by_slug(slug: str) -> models.Tag:
     """Returns tag from database by slug."""
     with SessionLocal() as db:
         tag = (
@@ -103,7 +105,7 @@ def get_tag_by_slug(slug: str):
         return tag
 
 
-def get_post_comments_by_slug(slug: str):
+def get_post_comments_by_slug(slug: str) -> list[models.Comment]:
     """Returns post comments from database by slug."""
     with SessionLocal() as db:
         post = get_post_by_slug(slug, db)
@@ -114,7 +116,7 @@ def get_post_comments_by_slug(slug: str):
         )
 
 
-def get_post_likes_by_slug(slug: str):
+def get_post_likes_by_slug(slug: str) -> list[models.Like]:
     """Returns post likes from database by slug."""
     with SessionLocal() as db:
         post = get_post_by_slug(slug, db)
@@ -123,7 +125,7 @@ def get_post_likes_by_slug(slug: str):
         )
 
 
-def _get_comment_by_id(db: Session, comment_id: int):
+def _get_comment_by_id(db: Session, comment_id: int) -> models.Comment:
     """Returns comment from database by id."""
     comment = (
         db.query(models.Comment)
@@ -150,7 +152,7 @@ def update_post(
     slug: str,
     post_update_schema: schemas.PostUpdateSchema,
     current_user_id: int,
-):
+) -> models.Post:
     """Updates post in database and returns it."""
     with SessionLocal() as db:
         post = get_post_by_slug(slug, db)
@@ -172,7 +174,7 @@ def update_post(
 def update_comment(
     comment_update_schema: schemas.CommentUpdateSchema,
     current_user_id: int,
-):
+) -> models.Comment:
     """Updates comment in database and returns it."""
     with SessionLocal() as db:
         comment = _get_comment_by_id(db, comment_update_schema.id)
@@ -188,14 +190,14 @@ def update_comment(
 # * D - delete ----------------------------------------------------------------
 
 
-def _delete_and_commit(db: Session, model: models.Base):
+def _delete_and_commit(db: Session, model: models.Base) -> models.Base:
     """Deletes model from database and returns it."""
     db.delete(model)
     db.commit()
     return model
 
 
-def delete_post(slug: str, current_user_id: int):
+def delete_post(slug: str, current_user_id: int) -> models.Post:
     """Deletes post from database and returns it."""
     with SessionLocal() as db:
         post = get_post_by_slug(slug, db)
@@ -203,7 +205,7 @@ def delete_post(slug: str, current_user_id: int):
         return _delete_and_commit(db, post)
 
 
-def delete_comment(comment_id: int, current_user_id: int):
+def delete_comment(comment_id: int, current_user_id: int) -> models.Comment:
     """Deletes comment from database and returns it."""
     with SessionLocal() as db:
         comment = _get_comment_by_id(db, comment_id)
@@ -211,7 +213,7 @@ def delete_comment(comment_id: int, current_user_id: int):
         return _delete_and_commit(db, comment)
 
 
-def delete_like(like_id: int, current_user_id: int):
+def delete_like(like_id: int, current_user_id: int) -> models.Like:
     """Deletes like from database and returns it."""
     with SessionLocal() as db:
         like = db.query(models.Like).filter(models.Like.id == like_id).first()

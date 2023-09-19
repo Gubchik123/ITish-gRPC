@@ -51,7 +51,7 @@ class AuthServicer(auth_pb2_grpc.AuthServicer):
         return auth_pb2.SignupResponse(status="OK")
 
 
-async def start(address: str):
+async def start(address: str) -> None:
     """Starts Auth gRPC server."""
     server = grpc.aio.server(futures.ThreadPoolExecutor(max_workers=3))
     health_servicer = health.HealthServicer(

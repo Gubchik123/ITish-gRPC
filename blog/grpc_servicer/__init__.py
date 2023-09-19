@@ -29,7 +29,7 @@ class BlogServicer(
     """Servicer to provide blog methods that implements blog server."""
 
 
-async def start(address: str):
+async def start(address: str) -> None:
     """Starts Blog gRPC server."""
     server = grpc.aio.server(futures.ThreadPoolExecutor(max_workers=3))
     health_servicer = health.HealthServicer(

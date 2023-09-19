@@ -15,7 +15,7 @@ from .protos.user_pb2 import UserSchema
 logger = logging.getLogger(__name__)
 
 
-def get_user_by_(username: str, db: Optional[Session] = None):
+def get_user_by_(username: str, db: Optional[Session] = None) -> models.User:
     """Returns user from database by the given username."""
     if db is None:
         logger.debug("DB session is None in get_user_by_(username)")
@@ -27,7 +27,9 @@ def get_user_by_(username: str, db: Optional[Session] = None):
     return user
 
 
-def get_user_posts_by_(user_username: str, limit: int, offset: int):
+def get_user_posts_by_(
+    user_username: str, limit: int, offset: int
+) -> list[models.Post]:
     """Returns user posts from database by the given username."""
     with SessionLocal() as db:
         user = get_user_by_(user_username, db)
@@ -40,7 +42,9 @@ def get_user_posts_by_(user_username: str, limit: int, offset: int):
         )
 
 
-def get_user_comments_by_(user_username: str, limit: int, offset: int):
+def get_user_comments_by_(
+    user_username: str, limit: int, offset: int
+) -> list[models.Comment]:
     """Returns user comments from database by the given username."""
     with SessionLocal() as db:
         user = get_user_by_(user_username, db)
@@ -53,7 +57,9 @@ def get_user_comments_by_(user_username: str, limit: int, offset: int):
         )
 
 
-def get_user_liked_posts_by_(user_username: str, limit: int, offset: int):
+def get_user_liked_posts_by_(
+    user_username: str, limit: int, offset: int
+) -> list[models.Post]:
     """Returns user liked posts from database by the given username."""
     with SessionLocal() as db:
         user = get_user_by_(user_username, db)
@@ -70,7 +76,7 @@ def get_user_liked_posts_by_(user_username: str, limit: int, offset: int):
         )
 
 
-def update_user_with_(username: str, user_schema: UserSchema):
+def update_user_with_(username: str, user_schema: UserSchema) -> None:
     """Updates user in database by the given username."""
     with SessionLocal() as db:
         user = get_user_by_(username, db)
@@ -88,7 +94,7 @@ def update_user_with_(username: str, user_schema: UserSchema):
         db.commit()
 
 
-def delete_user_with_(username: str):
+def delete_user_with_(username: str) -> None:
     """Deletes user from database by the given username."""
     with SessionLocal() as db:
         db.execute(delete(models.User).where(models.User.username == username))

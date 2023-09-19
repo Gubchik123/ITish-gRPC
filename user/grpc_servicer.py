@@ -126,7 +126,7 @@ class UserServicer(user_pb2_grpc.UserServicer):
         return StatusResponse(status="OK")
 
 
-async def start(address: str):
+async def start(address: str) -> None:
     """Starts User gRPC server."""
     server = grpc.aio.server(futures.ThreadPoolExecutor(max_workers=3))
     health_servicer = health.HealthServicer(
