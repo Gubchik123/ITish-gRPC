@@ -30,16 +30,14 @@ class PostListSchema(_message.Message):
     def __init__(self, title: _Optional[str] = ..., slug: _Optional[str] = ..., user_id: _Optional[int] = ...) -> None: ...
 
 class PostCreateSchema(_message.Message):
-    __slots__ = ["title", "body", "tags", "user_id"]
+    __slots__ = ["title", "body", "tags"]
     TITLE_FIELD_NUMBER: _ClassVar[int]
     BODY_FIELD_NUMBER: _ClassVar[int]
     TAGS_FIELD_NUMBER: _ClassVar[int]
-    USER_ID_FIELD_NUMBER: _ClassVar[int]
     title: str
     body: str
     tags: str
-    user_id: int
-    def __init__(self, title: _Optional[str] = ..., body: _Optional[str] = ..., tags: _Optional[str] = ..., user_id: _Optional[int] = ...) -> None: ...
+    def __init__(self, title: _Optional[str] = ..., body: _Optional[str] = ..., tags: _Optional[str] = ...) -> None: ...
 
 class PostUpdateSchema(_message.Message):
     __slots__ = ["title", "body", "tags"]
@@ -68,6 +66,14 @@ class CommentSchema(_message.Message):
     post_id: int
     user_id: int
     def __init__(self, body: _Optional[str] = ..., post_id: _Optional[int] = ..., user_id: _Optional[int] = ...) -> None: ...
+
+class CommentCreateSchema(_message.Message):
+    __slots__ = ["body", "post_id"]
+    BODY_FIELD_NUMBER: _ClassVar[int]
+    POST_ID_FIELD_NUMBER: _ClassVar[int]
+    body: str
+    post_id: int
+    def __init__(self, body: _Optional[str] = ..., post_id: _Optional[int] = ...) -> None: ...
 
 class CommentUpdateSchema(_message.Message):
     __slots__ = ["id", "body"]
@@ -180,8 +186,8 @@ class GetPostCommentsResponse(_message.Message):
 class CreatePostCommentRequest(_message.Message):
     __slots__ = ["comment"]
     COMMENT_FIELD_NUMBER: _ClassVar[int]
-    comment: CommentSchema
-    def __init__(self, comment: _Optional[_Union[CommentSchema, _Mapping]] = ...) -> None: ...
+    comment: CommentCreateSchema
+    def __init__(self, comment: _Optional[_Union[CommentCreateSchema, _Mapping]] = ...) -> None: ...
 
 class UpdatePostCommentRequest(_message.Message):
     __slots__ = ["comment"]
@@ -208,10 +214,10 @@ class GetPostLikesResponse(_message.Message):
     def __init__(self, likes: _Optional[_Iterable[_Union[LikeSchema, _Mapping]]] = ...) -> None: ...
 
 class CreatePostLikeRequest(_message.Message):
-    __slots__ = ["like"]
-    LIKE_FIELD_NUMBER: _ClassVar[int]
-    like: LikeSchema
-    def __init__(self, like: _Optional[_Union[LikeSchema, _Mapping]] = ...) -> None: ...
+    __slots__ = ["post_id"]
+    POST_ID_FIELD_NUMBER: _ClassVar[int]
+    post_id: int
+    def __init__(self, post_id: _Optional[int] = ...) -> None: ...
 
 class DeletePostLikeRequest(_message.Message):
     __slots__ = ["like_id"]

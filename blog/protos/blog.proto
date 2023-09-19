@@ -48,7 +48,6 @@ message PostCreateSchema {
     string title = 1;
     string body = 2;
     string tags = 3;
-    int64 user_id = 4;
 }
 
 message PostUpdateSchema {
@@ -70,6 +69,11 @@ message CommentSchema {
     string body = 1;
     int64 post_id = 2;
     optional int64 user_id = 3;
+}
+
+message CommentCreateSchema {
+    string body = 1;
+    int64 post_id = 2;
 }
 
 message CommentUpdateSchema {
@@ -148,7 +152,7 @@ message GetPostCommentsResponse {
 }
 
 message CreatePostCommentRequest {
-    CommentSchema comment = 1;
+    CommentCreateSchema comment = 1;
 }
 
 message UpdatePostCommentRequest {
@@ -169,7 +173,7 @@ message GetPostLikesResponse {
 }
 
 message CreatePostLikeRequest {
-    LikeSchema like = 1;
+    int64 post_id = 1;
 }
 
 message DeletePostLikeRequest {
