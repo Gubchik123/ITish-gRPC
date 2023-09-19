@@ -1,20 +1,141 @@
+import logging
+
 import grpc
 from concurrent import futures
-
 from grpc_health.v1 import health
 from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 from grpc_reflection.v1alpha import reflection
+from sqlalchemy.orm.exc import NoResultFound
 
-import user.protos.user_pb2 as user_pb2
-import user.protos.user_pb2_grpc as user_pb2_grpc
+from models import User
+from auth.decorators import login_required
+from blog.protos.blog_pb2 import StatusResponse
+from blog.grpc_service import PostBlogServicer, CommentBlogServicer
+
+from . import crud
+from .protos import user_pb2
+from .protos import user_pb2_grpc
+
+
+logger = logging.getLogger(__name__)
 
 
 class UserServicer(user_pb2_grpc.UserServicer):
     """Servicer to provide user methods that implements user server."""
 
+    @login_required
+    def GetUserByUsername(
+        self,
+        request: user_pb2.GetUserByUsernameRequest,
+        context: grpc.ServicerContext,
+        current_user: User,
+    ) -> user_pb2.GetUserByUsernameResponse:
+        """Returns info about user by the given username in the request."""
+        logger.info("GetUserByUsername")
+        try:
+            user = crud.get_user_by_(request.username)
+            return user_pb2.GetUserByUsernameResponse(
+                user=user_pb2.UserDetailSchema(
+                    id=user.id if user.id == current_user.id else None,
+                    username=user.username,
+                    email=user.email,
+                    created=user.created.strftime("%d.%m.%Y"),
+                )
+            )
+        except NoResultFound:
+            context.abort(grpc.StatusCode.NOT_FOUND, "User not found")
+
+    @login_required
+    def GetUserPosts(
+        self,
+        request: user_pb2.GetUserPostsRequest,
+        context: grpc.ServicerContext,
+        current_user: User,
+    ) -> user_pb2.GetUserPostsResponse:
+        """Returns user posts by the given username in the request."""
+        logger.info("GetUserPosts")
+        try:
+            return user_pb2.GetUserPostsResponse(
+                posts=(
+                    PostBlogServicer._get_post_list_schema_from_(post)
+                    for post in crud.get_user_posts_by_(
+                        request.username, request.limit, request.offset
+                    )
+                )
+            )
+        except NoResultFound:
+            context.abort(grpc.StatusCode.NOT_FOUND, "User not found")
+
+    @login_required
+    def GetUserComments(
+        self,
+        request: user_pb2.GetUserCommentsRequest,
+        context: grpc.ServicerContext,
+        current_user: User,
+    ) -> user_pb2.GetUserCommentsResponse:
+        """Returns user comments by the given username in the request."""
+        logger.info("GetUserComments")
+        try:
+            return user_pb2.GetUserCommentsResponse(
+                comments=(
+                    CommentBlogServicer._get_comment_schema_from_(comment)
+                    for comment in crud.get_user_comments_by_(
+                        request.username, request.limit, request.offset
+                    )
+                )
+            )
+        except NoResultFound:
+            context.abort(grpc.StatusCode.NOT_FOUND, "User not found")
+
+    @login_required
+    def GetUserLikedPosts(
+        self,
+        request: user_pb2.GetUserLikedPostsRequest,
+        context: grpc.ServicerContext,
+        current_user: User,
+    ) -> user_pb2.GetUserLikedPostsResponse:
+        """Returns user liked posts by the given username in the request."""
+        logger.info("GetUserLikedPosts")
+        try:
+            return user_pb2.GetUserLikedPostsResponse(
+                posts=(
+                    PostBlogServicer._get_post_list_schema_from_(post)
+                    for post in crud.get_user_liked_posts_by_(
+                        request.username, request.limit, request.offset
+                    )
+                )
+            )
+        except NoResultFound:
+            context.abort(grpc.StatusCode.NOT_FOUND, "User not found")
+
+    @login_required
+    def UpdateUser(
+        self,
+        request: user_pb2.UpdateUserRequest,
+        context: grpc.ServicerContext,
+        current_user: User,
+    ) -> StatusResponse:
+        """Updates current user by the given data in the request."""
+        logger.info("UpdateUser")
+        crud.update_user_with_(current_user.username, request.user)
+        return StatusResponse(status="OK")
+
+    @login_required
+    def DeleteUser(
+        self,
+        request: user_pb2.DeleteUserRequest,
+        context: grpc.ServicerContext,
+        current_user: User,
+    ) -> StatusResponse:
+        """Deletes current user."""
+        logger.info("DeleteUser")
+        crud.delete_user_with_(current_user.username)
+        return StatusResponse(status="OK")
+
 
 async def start(address: str):
+    """Starts User gRPC server."""
     server = grpc.aio.server(futures.ThreadPoolExecutor(max_workers=3))
     health_servicer = health.HealthServicer(
         experimental_non_blocking=True,
@@ -34,6 +155,8 @@ async def start(address: str):
 
     server.add_insecure_port(address)
     await server.start()
+
+    logger.info(f"User gRPC server is listening on {address}")
 
     try:
         await server.wait_for_termination()
