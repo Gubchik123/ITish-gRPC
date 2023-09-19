@@ -4,6 +4,7 @@ import grpc
 from sqlalchemy.orm.exc import NoResultFound
 
 import models
+from auth.decorators import login_required
 
 from .. import crud
 from ..protos import blog_pb2
@@ -41,38 +42,44 @@ class PostBlogServicer(blog_pb2_grpc.BlogServicer):
         except NoResultFound:
             context.abort(grpc.StatusCode.NOT_FOUND, "Post not found")
 
+    @login_required
     def CreatePost(
         self,
         request: blog_pb2.CreatePostRequest,
         context: grpc.ServicerContext,
+        current_user: models.User,
     ) -> blog_pb2.StatusResponse:
         """Creates a post by the given PostSchema in the request."""
         logger.info("CreatePost")
-        crud.create_post(request.post)
+        crud.create_post(request.post, current_user.id)
         return blog_pb2.StatusResponse(status="OK")
 
+    @login_required
     def UpdatePostBySlug(
         self,
         request: blog_pb2.UpdatePostBySlugRequest,
         context: grpc.ServicerContext,
+        current_user: models.User,
     ) -> blog_pb2.StatusResponse:
         """Updates a post by the given PostUpdateSchema in the request."""
         logger.info("UpdatePostBySlug")
         try:
-            crud.update_post(request.post_slug, request.post)
+            crud.update_post(request.post_slug, request.post, current_user.id)
             return blog_pb2.StatusResponse(status="OK")
         except NoResultFound:
             context.abort(grpc.StatusCode.NOT_FOUND, "Post not found")
 
+    @login_required
     def DeletePostBySlug(
         self,
         request: blog_pb2.DeletePostBySlugRequest,
         context: grpc.ServicerContext,
+        current_user: models.User,
     ) -> blog_pb2.StatusResponse:
         """Deletes a post by the given slug in the request."""
         logger.info("DeletePostBySlug")
         try:
-            crud.delete_post(request.slug)
+            crud.delete_post(request.slug, current_user.id)
             return blog_pb2.StatusResponse(status="OK")
         except NoResultFound:
             context.abort(grpc.StatusCode.NOT_FOUND, "Post not found")

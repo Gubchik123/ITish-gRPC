@@ -3,6 +3,9 @@ import logging
 import grpc
 from sqlalchemy.orm.exc import NoResultFound
 
+from models import User
+from auth.decorators import login_required
+
 from .. import crud
 from ..protos import blog_pb2
 from ..protos import blog_pb2_grpc
@@ -36,25 +39,29 @@ class LikeBlogServicer(blog_pb2_grpc.BlogServicer):
         except NoResultFound:
             context.abort(grpc.StatusCode.NOT_FOUND, "Post not found")
 
+    @login_required
     def CreatePostLike(
         self,
         request: blog_pb2.CreatePostLikeRequest,
         context: grpc.ServicerContext,
+        current_user: User,
     ) -> blog_pb2.StatusResponse:
         """Creates a like for a post with the given slug in the request."""
         logger.info("CreatePostLike")
-        crud.create_like(request.like)
+        crud.create_like(request.post_id, current_user.id)
         return blog_pb2.StatusResponse(status="OK")
 
+    @login_required
     def DeletePostLike(
         self,
         request: blog_pb2.DeletePostLikeRequest,
         context: grpc.ServicerContext,
+        current_user: User,
     ) -> blog_pb2.StatusResponse:
         """Deletes a like by the like id in the request."""
         logger.info("DeletePostLike")
         try:
-            crud.delete_like(request.like_id)
+            crud.delete_like(request.like_id, current_user.id)
             return blog_pb2.StatusResponse(status="OK")
         except NoResultFound:
             context.abort(grpc.StatusCode.NOT_FOUND, "Like not found")
