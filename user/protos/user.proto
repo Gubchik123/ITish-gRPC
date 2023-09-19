@@ -1,0 +1,78 @@
+// Proto file for user service
+
+syntax = "proto3";
+
+package user;
+
+import "blog/protos/blog.proto";
+
+service User {
+    // Getting methods --------------------------------------------------------------------
+    rpc GetUserByUsername(GetUserByUsernameRequest) returns (GetUserByUsernameResponse) {}
+    rpc GetUserPosts(GetUserPostsRequest) returns (GetUserPostsResponse) {}
+    rpc GetUserComments(GetUserCommentsRequest) returns (GetUserCommentsResponse) {}
+    rpc GetUserLikedPosts(GetUserLikedPostsRequest) returns (GetUserLikedPostsResponse) {}
+    // Processing methods -----------------------------------------------------------------
+    rpc UpdateUser(UpdateUserRequest) returns (blog.StatusResponse) {}
+    rpc DeleteUser(DeleteUserRequest) returns (blog.StatusResponse) {}
+}
+
+// Structures -----------------------------------------------------------------------------
+
+message UserSchema {
+    string email = 1;
+    string username = 2;
+    string password = 3;
+}
+
+message UserDetailSchema {
+    int64 id = 1;
+    string email = 2;
+    string username = 3;
+}
+
+// Request - responses --------------------------------------------------------------------
+
+// Getting requests - responses -------------------------------------------------
+
+message GetUserByUsernameRequest {
+    string username = 1;
+}
+message GetUserByUsernameResponse {
+    UserDetailSchema user = 1;
+}
+
+message GetUserPostsRequest {
+    int64 limit = 1;
+    int64 offset = 2;
+}
+message GetUserPostsResponse {
+    repeated blog.PostListSchema posts = 1;
+}
+
+message GetUserCommentsRequest {
+    int64 limit = 1;
+    int64 offset = 2;
+}
+message GetUserCommentsResponse {
+    repeated blog.CommentSchema comments = 1;
+}
+
+message GetUserLikedPostsRequest {
+    int64 limit = 1;
+    int64 offset = 2;
+}
+message GetUserLikedPostsResponse {
+    repeated blog.PostListSchema posts = 1;
+}
+
+// Processing requests ----------------------------------------------------------
+
+message UpdateUserRequest {
+    string username = 1;
+    UserSchema user = 2;
+}
+
+message DeleteUserRequest {
+    string username = 1;
+}
