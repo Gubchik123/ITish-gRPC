@@ -6,9 +6,9 @@ from grpc_health.v1 import health
 from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 from grpc_reflection.v1alpha import reflection
-from sqlalchemy.orm.exc import NoResultFound
 
 from models import User
+from decorators import catch_not_found_
 from auth.decorators import login_required
 from blog.protos.blog_pb2 import StatusResponse
 from blog.grpc_service import PostBlogServicer, CommentBlogServicer
@@ -25,6 +25,7 @@ class UserServicer(user_pb2_grpc.UserServicer):
     """Servicer to provide user methods that implements user server."""
 
     @login_required
+    @catch_not_found_("User")
     def GetUserByUsername(
         self,
         request: user_pb2.GetUserByUsernameRequest,
@@ -33,20 +34,18 @@ class UserServicer(user_pb2_grpc.UserServicer):
     ) -> user_pb2.GetUserByUsernameResponse:
         """Returns info about user by the given username in the request."""
         logger.info("GetUserByUsername")
-        try:
-            user = crud.get_user_by_(request.username)
-            return user_pb2.GetUserByUsernameResponse(
-                user=user_pb2.UserDetailSchema(
-                    id=user.id if user.id == current_user.id else None,
-                    username=user.username,
-                    email=user.email,
-                    created=user.created.strftime("%d.%m.%Y"),
-                )
+        user = crud.get_user_by_(request.username)
+        return user_pb2.GetUserByUsernameResponse(
+            user=user_pb2.UserDetailSchema(
+                id=user.id if user.id == current_user.id else None,
+                username=user.username,
+                email=user.email,
+                created=user.created.strftime("%d.%m.%Y"),
             )
-        except NoResultFound:
-            context.abort(grpc.StatusCode.NOT_FOUND, "User not found")
+        )
 
     @login_required
+    @catch_not_found_("User")
     def GetUserPosts(
         self,
         request: user_pb2.GetUserPostsRequest,
@@ -55,19 +54,17 @@ class UserServicer(user_pb2_grpc.UserServicer):
     ) -> user_pb2.GetUserPostsResponse:
         """Returns user posts by the given username in the request."""
         logger.info("GetUserPosts")
-        try:
-            return user_pb2.GetUserPostsResponse(
-                posts=(
-                    PostBlogServicer._get_post_list_schema_from_(post)
-                    for post in crud.get_user_posts_by_(
-                        request.username, request.limit, request.offset
-                    )
+        return user_pb2.GetUserPostsResponse(
+            posts=(
+                PostBlogServicer._get_post_list_schema_from_(post)
+                for post in crud.get_user_posts_by_(
+                    request.username, request.limit, request.offset
                 )
             )
-        except NoResultFound:
-            context.abort(grpc.StatusCode.NOT_FOUND, "User not found")
+        )
 
     @login_required
+    @catch_not_found_("User")
     def GetUserComments(
         self,
         request: user_pb2.GetUserCommentsRequest,
@@ -76,19 +73,17 @@ class UserServicer(user_pb2_grpc.UserServicer):
     ) -> user_pb2.GetUserCommentsResponse:
         """Returns user comments by the given username in the request."""
         logger.info("GetUserComments")
-        try:
-            return user_pb2.GetUserCommentsResponse(
-                comments=(
-                    CommentBlogServicer._get_comment_schema_from_(comment)
-                    for comment in crud.get_user_comments_by_(
-                        request.username, request.limit, request.offset
-                    )
+        return user_pb2.GetUserCommentsResponse(
+            comments=(
+                CommentBlogServicer._get_comment_schema_from_(comment)
+                for comment in crud.get_user_comments_by_(
+                    request.username, request.limit, request.offset
                 )
             )
-        except NoResultFound:
-            context.abort(grpc.StatusCode.NOT_FOUND, "User not found")
+        )
 
     @login_required
+    @catch_not_found_("User")
     def GetUserLikedPosts(
         self,
         request: user_pb2.GetUserLikedPostsRequest,
@@ -97,17 +92,14 @@ class UserServicer(user_pb2_grpc.UserServicer):
     ) -> user_pb2.GetUserLikedPostsResponse:
         """Returns user liked posts by the given username in the request."""
         logger.info("GetUserLikedPosts")
-        try:
-            return user_pb2.GetUserLikedPostsResponse(
-                posts=(
-                    PostBlogServicer._get_post_list_schema_from_(post)
-                    for post in crud.get_user_liked_posts_by_(
-                        request.username, request.limit, request.offset
-                    )
+        return user_pb2.GetUserLikedPostsResponse(
+            posts=(
+                PostBlogServicer._get_post_list_schema_from_(post)
+                for post in crud.get_user_liked_posts_by_(
+                    request.username, request.limit, request.offset
                 )
             )
-        except NoResultFound:
-            context.abort(grpc.StatusCode.NOT_FOUND, "User not found")
+        )
 
     @login_required
     def UpdateUser(

@@ -4,6 +4,7 @@ import grpc
 from sqlalchemy.orm.exc import NoResultFound
 
 import models
+from decorators import catch_not_found_
 
 from .. import crud
 from ..protos import blog_pb2
@@ -26,6 +27,7 @@ class TagBlogServicer(blog_pb2_grpc.BlogServicer):
             tags=(self._get_tag_schema_from_(tag) for tag in tags)
         )
 
+    @catch_not_found_("Tag")
     def GetTagBySlug(
         self,
         request: blog_pb2.GetTagBySlugRequest,
@@ -33,10 +35,7 @@ class TagBlogServicer(blog_pb2_grpc.BlogServicer):
     ) -> blog_pb2.GetTagBySlugResponse:
         """Returns a tag by slug."""
         logger.info("GetTagBySlug")
-        try:
-            tag = crud.get_tag_by_slug(request.slug)
-        except NoResultFound:
-            context.abort(grpc.StatusCode.NOT_FOUND, "Tag not found")
+        tag = crud.get_tag_by_slug(request.slug)
         return blog_pb2.GetTagBySlugResponse(
             tag=self._get_tag_schema_from_(tag),
             posts=(

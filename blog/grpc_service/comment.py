@@ -1,9 +1,9 @@
 import logging
 
 import grpc
-from sqlalchemy.orm.exc import NoResultFound
 
 from models import User, Comment
+from decorators import catch_not_found_
 from auth.decorators import login_required
 
 from .. import crud
@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 class CommentBlogServicer(blog_pb2_grpc.BlogServicer):
     """Servicer to provide comment methods that implements blog server."""
 
+    @catch_not_found_("Post")
     def GetPostComments(
         self,
         request: blog_pb2.GetPostCommentsRequest,
@@ -26,17 +27,14 @@ class CommentBlogServicer(blog_pb2_grpc.BlogServicer):
         Returns a list of comments for a post with the given slug in the request.
         """
         logger.info("GetPostComments")
-        try:
-            return blog_pb2.GetPostCommentsResponse(
-                comments=(
-                    self._get_comment_schema_from_(comment)
-                    for comment in crud.get_post_comments_by_slug(
-                        request.post_slug
-                    )
+        return blog_pb2.GetPostCommentsResponse(
+            comments=(
+                self._get_comment_schema_from_(comment)
+                for comment in crud.get_post_comments_by_slug(
+                    request.post_slug
                 )
             )
-        except NoResultFound:
-            context.abort(grpc.StatusCode.NOT_FOUND, "Post not found")
+        )
 
     @login_required
     def CreatePostComment(
@@ -51,6 +49,7 @@ class CommentBlogServicer(blog_pb2_grpc.BlogServicer):
         return blog_pb2.StatusResponse(status="OK")
 
     @login_required
+    @catch_not_found_("Comment")
     def UpdatePostComment(
         self,
         request: blog_pb2.UpdatePostCommentRequest,
@@ -59,13 +58,11 @@ class CommentBlogServicer(blog_pb2_grpc.BlogServicer):
     ) -> blog_pb2.StatusResponse:
         """Updates a comment by the comment id in the request."""
         logger.info("UpdatePostComment")
-        try:
-            crud.update_comment(request.comment, current_user.id)
-            return blog_pb2.StatusResponse(status="OK")
-        except NoResultFound:
-            context.abort(grpc.StatusCode.NOT_FOUND, "Comment not found")
+        crud.update_comment(request.comment, current_user.id)
+        return blog_pb2.StatusResponse(status="OK")
 
     @login_required
+    @catch_not_found_("Comment")
     def DeletePostComment(
         self,
         request: blog_pb2.DeletePostCommentRequest,
@@ -74,11 +71,8 @@ class CommentBlogServicer(blog_pb2_grpc.BlogServicer):
     ) -> blog_pb2.StatusResponse:
         """Deletes a comment by the comment id in the request."""
         logger.info("DeletePostComment")
-        try:
-            crud.delete_comment(request.comment_id, current_user.id)
-            return blog_pb2.StatusResponse(status="OK")
-        except NoResultFound:
-            context.abort(grpc.StatusCode.NOT_FOUND, "Comment not found")
+        crud.delete_comment(request.comment_id, current_user.id)
+        return blog_pb2.StatusResponse(status="OK")
 
     @staticmethod
     def _get_comment_schema_from_(comment: Comment) -> blog_pb2.CommentSchema:

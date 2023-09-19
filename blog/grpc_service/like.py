@@ -1,9 +1,9 @@
 import logging
 
 import grpc
-from sqlalchemy.orm.exc import NoResultFound
 
 from models import User
+from decorators import catch_not_found_
 from auth.decorators import login_required
 
 from .. import crud
@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 class LikeBlogServicer(blog_pb2_grpc.BlogServicer):
     """Servicer to provide like methods that implements blog server."""
 
+    @catch_not_found_("Post")
     def GetPostLikes(
         self,
         request: blog_pb2.GetPostLikesRequest,
@@ -26,18 +27,15 @@ class LikeBlogServicer(blog_pb2_grpc.BlogServicer):
         Returns a list of like ids for a post with the given slug in the request.
         """
         logger.info("GetPostLikes")
-        try:
-            return blog_pb2.GetPostLikesResponse(
-                likes=(
-                    blog_pb2.LikeSchema(
-                        post_id=like.post_id,
-                        user_id=like.user_id,
-                    )
-                    for like in crud.get_post_likes_by_slug(request.post_slug)
+        return blog_pb2.GetPostLikesResponse(
+            likes=(
+                blog_pb2.LikeSchema(
+                    post_id=like.post_id,
+                    user_id=like.user_id,
                 )
+                for like in crud.get_post_likes_by_slug(request.post_slug)
             )
-        except NoResultFound:
-            context.abort(grpc.StatusCode.NOT_FOUND, "Post not found")
+        )
 
     @login_required
     def CreatePostLike(
@@ -52,6 +50,7 @@ class LikeBlogServicer(blog_pb2_grpc.BlogServicer):
         return blog_pb2.StatusResponse(status="OK")
 
     @login_required
+    @catch_not_found_("Like")
     def DeletePostLike(
         self,
         request: blog_pb2.DeletePostLikeRequest,
@@ -60,8 +59,5 @@ class LikeBlogServicer(blog_pb2_grpc.BlogServicer):
     ) -> blog_pb2.StatusResponse:
         """Deletes a like by the like id in the request."""
         logger.info("DeletePostLike")
-        try:
-            crud.delete_like(request.like_id, current_user.id)
-            return blog_pb2.StatusResponse(status="OK")
-        except NoResultFound:
-            context.abort(grpc.StatusCode.NOT_FOUND, "Like not found")
+        crud.delete_like(request.like_id, current_user.id)
+        return blog_pb2.StatusResponse(status="OK")
