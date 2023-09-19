@@ -94,8 +94,9 @@ class PostBlogServicer(blog_pb2_grpc.BlogServicer):
             user_id=post.user_id,
         )
 
+    @staticmethod
     def _get_post_list_schema_from_(
-        self, post: models.Post
+        post: models.Post,
     ) -> blog_pb2.PostListSchema:
         """Returns a PostListSchema from the given Post model."""
         return blog_pb2.PostListSchema(
