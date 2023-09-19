@@ -3,7 +3,7 @@ import logging
 import grpc
 from sqlalchemy.orm.exc import NoResultFound
 
-from models import User
+from models import User, Comment
 from auth.decorators import login_required
 
 from .. import crud
@@ -29,11 +29,7 @@ class CommentBlogServicer(blog_pb2_grpc.BlogServicer):
         try:
             return blog_pb2.GetPostCommentsResponse(
                 comments=(
-                    blog_pb2.CommentSchema(
-                        body=comment.body,
-                        user_id=comment.user_id,
-                        post_id=comment.post_id,
-                    )
+                    self._get_comment_schema_from_(comment)
                     for comment in crud.get_post_comments_by_slug(
                         request.post_slug
                     )
@@ -83,3 +79,12 @@ class CommentBlogServicer(blog_pb2_grpc.BlogServicer):
             return blog_pb2.StatusResponse(status="OK")
         except NoResultFound:
             context.abort(grpc.StatusCode.NOT_FOUND, "Comment not found")
+
+    @staticmethod
+    def _get_comment_schema_from_(comment: Comment) -> blog_pb2.CommentSchema:
+        """Returns a CommentSchema from the given Comment model."""
+        return blog_pb2.CommentSchema(
+            body=comment.body,
+            user_id=comment.user_id,
+            post_id=comment.post_id,
+        )
