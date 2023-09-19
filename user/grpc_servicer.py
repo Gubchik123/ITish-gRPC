@@ -11,7 +11,7 @@ from models import User
 from decorators import catch_not_found_
 from auth.decorators import login_required
 from blog.protos.blog_pb2 import StatusResponse
-from blog.grpc_service import PostBlogServicer, CommentBlogServicer
+from blog.grpc_servicer import PostBlogServicer, CommentBlogServicer
 
 from . import crud
 from .protos import user_pb2
